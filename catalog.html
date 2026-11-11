@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Каталог инструмента</title>
+<meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23f97316'/%3E%3Cpath d='M35 70L45 60M60 40L70 30M52 52C56 56 60 56 64 52C68 48 68 44 64 40L52 52Z' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 <style>
+html { background-color: #0f172a; }
 :root {
     --primary: #f97316;
     --primary-hover: #ea580c;
@@ -29,15 +31,17 @@ body {
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* Шапка */
-.header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); color: #fff; padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,.15); border-bottom: 3px solid var(--primary); }
+.header { background: #0f172a; color: #fff; padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,.15); border-bottom: 3px solid var(--primary); }
 .header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; text-decoration: none; color: #fff; text-align: left; line-height: 1.1; }
 .logo svg { width: 36px; height: 36px; flex-shrink: 0; transition: transform 0.3s ease; }
 .logo:hover svg { transform: rotate(-15deg) scale(1.1); }
 .logo-text { display: flex; flex-direction: column; }
 .logo span { color: var(--primary); }
-.nav-menu { display: flex; gap: 25px; margin-top: 10px; }
-.nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; transition: color 0.3s; position: relative; }
+
+/* Меню навигации (5 пунктов) */
+.nav-menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px; }
+.nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; transition: color 0.3s; position: relative; font-size: 1rem; }
 .nav-menu a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
 .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
 .nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
@@ -50,7 +54,7 @@ body {
 .page.active { display: block; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .stagger-item { animation: popInBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 
-/* Управление (Остался только поиск) */
+/* Управление (Только поиск) */
 .title { text-align: center; padding: 40px 0 20px; }
 .title h1 { font-size: 2.2rem; color: var(--text-dark); font-weight: 800; }
 .title p { color: var(--text-gray); margin-top: 10px; font-size: 1.1rem; }
@@ -61,7 +65,7 @@ body {
 /* Сетки */
 .grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-bottom: 40px; }
 
-/* СТИЛЬНЫЕ КАРТОЧКИ С КАРТИНКАМИ */
+/* Карточки */
 .cat-card, .prod-card {
     background: #fff; border: 2px solid var(--border); border-radius: 16px;
     overflow: hidden; cursor: pointer; text-decoration: none; color: inherit;
@@ -75,19 +79,16 @@ body {
     border-color: var(--primary); z-index: 2;
 }
 
-/* Картинка категории */
 .cat-image-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
 .cat-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
 .cat-card:hover .cat-image-box img { transform: scale(1.1); }
 .cat-image-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
 
-/* Текст категории */
 .cat-info { padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; }
 .cat-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
 .cat-count { font-size: .85rem; color: var(--text-gray); background: #f1f5f9; padding: 2px 10px; border-radius: 20px; margin-top: auto; transition: all 0.3s; }
 .cat-card:hover .cat-count { background: var(--primary-light); color: var(--primary-hover); }
 
-/* Карточка товара */
 .prod-img-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
 .prod-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
 .prod-card:hover .prod-img-box img { transform: scale(1.1); }
@@ -97,13 +98,11 @@ body {
 .prod-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 10px; border-radius: 8px; margin-top: auto; transition: all 0.3s; }
 .prod-card:hover .prod-price { background: var(--primary); color: #fff; }
 
-/* Кнопка назад */
 .back-header { display: flex; align-items: center; gap: 15px; margin: 30px 0 20px; }
 .back-btn { font-size: 1.1rem; color: var(--text-dark); text-decoration: none; font-weight: bold; padding: 10px 20px; background: #fff; border-radius: 10px; border: 2px solid var(--border); transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
 .back-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-5px); }
 .back-header h2 { font-size: 1.6rem; color: var(--text-dark); }
 
-/* Детальная страница */
 .prod-detail { display: flex; flex-direction: column; gap: 30px; background: #fff; padding: 30px; border-radius: 20px; border: 2px solid var(--border); margin-top: 20px; position: relative; overflow: hidden; }
 .prod-detail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), #fbbf24); }
 .detail-img-box { width: 100%; max-height: 350px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
@@ -116,13 +115,13 @@ body {
 .call-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s; border: none; cursor: pointer; width: 100%; animation: pulseBtn 2s infinite; }
 .call-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(249,115,22,0.4); animation: none; }
 
-/* Футер */
 .footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 0; font-size: .9rem; margin-top: 50px; border-top: 3px solid var(--primary); }
 .mobile-call { display: flex; position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 700; z-index: 100; justify-content: center; transition: 0.2s; gap: 10px; align-items: center; }
 .mobile-call svg { width: 20px; height: 20px; }
 
 @media(min-width:640px){
     .header-content { flex-direction: row; justify-content: space-between; }
+    .nav-menu { gap: 25px; }
     .grid { grid-template-columns: repeat(3,1fr); }
     .mobile-call { display: none; }
     body { padding-bottom: 0; }
@@ -144,9 +143,12 @@ body {
       </svg>
       <div class="logo-text">Аренда и Ремонт<br><span>Инструмента</span></div>
     </a>
+    
     <div class="nav-menu">
       <a href="index.html">Главная</a>
       <a href="catalog.html" class="active">Каталог</a>
+      <a href="index.html#repair">Ремонт</a>
+      <a href="index.html#faq">Вопросы</a>
       <a href="index.html#contact">Контакты</a>
     </div>
   </div>
