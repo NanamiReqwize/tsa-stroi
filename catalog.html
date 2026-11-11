@@ -1,391 +1,669 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Каталог инструмента — Аренда и Ремонт</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; color: #1e293b; line-height: 1.5; padding-bottom: 70px; }
-    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог инструмента</title>
+<style>
+:root {
+    --primary: #f97316;
+    --primary-hover: #ea580c;
+    --primary-light: #fff7ed;
+    --text-dark: #0f172a;
+    --text-gray: #64748b;
+    --border: #e2e8f0;
+}
 
-    /* Шапка */
-    .header { background-color: #0f172a; color: #fff; padding: 16px 0; position: sticky; top: 0; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; text-decoration: none; color: #fff; text-align: center; line-height: 1.2;}
-    .logo span { color: #f97316; }
-    .nav-menu { display: flex; gap: 20px; margin-top: 10px; }
-    .nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 1rem; transition: color 0.2s; }
-    .nav-menu a:hover, .nav-menu a.active { color: #f97316; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* Заголовок */
-    .page-title { text-align: center; padding: 40px 0 20px; }
-    .page-title h1 { font-size: 1.8rem; color: #0f172a; }
-    .page-title p { color: #64748b; margin-top: 10px; }
+/* Анимированный фон */
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #f8fafc 50%, #ffedd5 100%);
+    background-size: 200% 200%;
+    animation: gradientBG 15s ease infinite;
+    color: #1e293b;
+    line-height: 1.6;
+    padding-bottom: 80px;
+    overflow-x: hidden;
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    /* Каталог */
-    .section { padding: 20px 0 40px; }
-    .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    .product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .product-card:hover { transform: translateY(-4px); border-color: #f97316; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-    
-    .product-img { width: 100%; height: 150px; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e2e8f0; position: relative;}
-    .product-img::after { content: 'ФОТО'; color: #cbd5e1; font-weight: 700; font-size: 1.2rem; letter-spacing: 2px;}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-    .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
-    .product-title { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 5px; line-height: 1.3;}
-    .product-price { font-size: 1.2rem; font-weight: 800; color: #f97316; margin-top: auto; margin-bottom: 10px;}
-    
-    .product-btn { display: block; text-align: center; background-color: #0f172a; color: #fff; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; border: none; cursor: pointer; }
-    .product-card:hover .product-btn { background-color: #f97316; }
+/* Шапка */
+.header {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    border-bottom: 3px solid var(--primary);
+}
+.header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #fff; }
+.logo span { color: var(--primary); }
+.nav-menu { display: flex; gap: 25px; margin-top: 10px; }
+.nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; transition: color 0.3s; position: relative; }
+.nav-menu a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+    background: var(--primary); transition: width 0.3s ease;
+}
+.nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
 
-    /* МОДАЛЬНОЕ ОКНО */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(3px); }
-    .modal-overlay.active { display: flex; }
-    .modal-content { background: #fff; border-radius: 16px; width: 100%; max-width: 450px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    
-    .modal-header { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
-    .modal-header h3 { color: #0f172a; font-size: 1.1rem; margin: 0; }
-    .close-btn { background: none; border: none; font-size: 1.8rem; color: #64748b; cursor: pointer; line-height: 1; padding: 0 5px;}
-    .close-btn:hover { color: #f97316; }
+/* ===== АНИМАЦИИ ===== */
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes popInBounce {
+    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    60% { opacity: 1; transform: scale(1.02) translateY(-3px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes pulseBtn {
+    0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(249, 115, 22, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
 
-    .modal-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-    .modal-price-display { font-size: 2rem; font-weight: 800; color: #f97316; text-align: center; margin-bottom: 10px; }
-    
-    .modal-call-box { background: #fff7ed; border: 1px solid #fed7aa; padding: 20px; border-radius: 12px; text-align: center; }
-    .modal-call-label { font-size: 0.9rem; color: #9a3412; margin-bottom: 12px; font-weight: 600; }
-    .modal-call-btn { display: inline-block; background-color: #f97316; color: #fff; text-decoration: none; padding: 14px 30px; border-radius: 50px; font-weight: 700; font-size: 1.2rem; transition: background 0.2s; box-shadow: 0 4px 12px rgba(249,115,22,0.3); }
-    .modal-call-btn:hover { background-color: #ea580c; }
-    .modal-note { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
+/* Скрываем все страницы по умолчанию */
+.page { display: none; }
+/* Показываем только активную */
+.page.active { display: block; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    /* Футер */
-    .footer { background-color: #0f172a; color: #94a3b8; text-align: center; padding: 20px 0; font-size: 0.85rem; border-top: 1px solid #1e293b; margin-top: 30px;}
-    .footer .requisites { margin-top: 8px; font-size: 0.8rem; color: #64748b; }
-    .mobile-call-btn { display: flex; position: fixed; bottom: 20px; left: 20px; right: 20px; background-color: #f97316; color: #fff; text-align: center; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 100; justify-content: center; align-items: center; gap: 8px; }
+.stagger-item { animation: popInBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 
-    @media (min-width: 640px) {
-      .header-content { flex-direction: row; justify-content: space-between; }
-      .catalog-grid { grid-template-columns: repeat(2, 1fr); }
-      .mobile-call-btn { display: none; }
-      body { padding-bottom: 0; }
-    }
-    @media (min-width: 1024px) {
-      .catalog-grid { grid-template-columns: repeat(4, 1fr); }
-      .page-title h1 { font-size: 2.4rem; }
-    }
-  </style>
+/* Сетки и Карточки */
+.title { text-align: center; padding: 40px 0 20px; }
+.title h1 { font-size: 2.2rem; color: var(--text-dark); font-weight: 800; text-shadow: 2px 2px 4px rgba(249,115,22,0.1); }
+.title p { color: var(--text-gray); margin-top: 10px; font-size: 1.1rem; }
+
+.controls {
+    background: #fff; padding: 20px; border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.04);
+    border: 1px solid var(--border); margin-bottom: 30px;
+    display: flex; flex-direction: column; gap: 15px;
+    transition: all 0.3s;
+}
+.controls:focus-within { box-shadow: 0 10px 30px rgba(249,115,22,0.15); border-color: var(--primary); }
+.search-box {
+    width: 100%; padding: 14px 20px; border: 2px solid var(--border); border-radius: 10px;
+    font-size: 1rem; outline: none; transition: 0.3s; background: #f8fafc;
+}
+.search-box:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
+.filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.filters select {
+    flex: 1; padding: 12px 15px; border: 2px solid var(--border); border-radius: 10px;
+    font-size: .95rem; outline: none; background: #fff; cursor: pointer; transition: 0.3s;
+}
+.filters select:focus { border-color: var(--primary); }
+.alphabet { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 5px; }
+.alphabet button {
+    background: #f1f5f9; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px;
+    cursor: pointer; font-weight: 600; color: #475569; transition: all 0.2s;
+}
+.alphabet button:hover { background: #fed7aa; color: var(--primary-hover); border-color: var(--primary); }
+.alphabet button.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: #fff; border-color: transparent; box-shadow: 0 4px 10px rgba(249,115,22,0.3);
+}
+
+.grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-bottom: 40px; }
+
+/* СТИЛЬНЫЕ КАРТОЧКИ С БЛИКОМ */
+.cat-card, .prod-card {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 15px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(0,0,0,.02);
+    position: relative;
+    overflow: hidden; 
+    /* Гарантируем, что клики будут работать */
+    pointer-events: auto; 
+}
+
+/* Эффект блика (Shine) - декоративный, клики пропускает */
+.cat-card::before, .prod-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    transition: left 0.6s ease;
+    z-index: 3;
+    pointer-events: none; /* ВАЖНО: чтобы блик не блокировал нажатие */
+}
+
+.cat-card:hover, .prod-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
+    border-color: var(--primary);
+    background: linear-gradient(to bottom right, #ffffff, var(--primary-light));
+    z-index: 2;
+}
+.cat-card:hover::before, .prod-card:hover::before { left: 150%; }
+.cat-card:active, .prod-card:active { transform: translateY(-2px) scale(0.98); }
+
+.cat-title { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); z-index: 1; position: relative; transition: color 0.3s; }
+.cat-card:hover .cat-title { color: var(--primary-hover); }
+.cat-count { font-size: .85rem; color: var(--text-gray); margin-top: 8px; background: #f1f5f9; padding: 2px 10px; border-radius: 20px; z-index: 1; position: relative; transition: background 0.3s; }
+.cat-card:hover .cat-count { background: #ffedd5; color: var(--primary-hover); }
+
+.prod-img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 15px; mix-blend-mode: multiply; transition: transform 0.4s ease; z-index: 1; position: relative; }
+.prod-card:hover .prod-img { transform: scale(1.1) translateY(-5px); }
+.no-photo { background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; border-radius: 10px; font-size: .9rem; width: 100%; height: 140px; margin-bottom: 15px; }
+.prod-title { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; flex-grow: 1; z-index: 1; position: relative; }
+.prod-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-top: auto; background: #fff7ed; padding: 5px 10px; border-radius: 8px; z-index: 1; position: relative; transition: all 0.3s; }
+.prod-card:hover .prod-price { background: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(249,115,22,0.3); }
+
+/* Кнопка назад */
+.back-header { display: flex; align-items: center; gap: 15px; margin: 30px 0 20px; }
+.back-btn { font-size: 1.1rem; color: var(--text-dark); text-decoration: none; font-weight: bold; padding: 10px 20px; background: #fff; border-radius: 10px; border: 2px solid var(--border); transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+.back-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-5px); box-shadow: 0 4px 10px rgba(249,115,22,0.15); }
+.back-btn:active { transform: scale(0.95); }
+.back-header h2 { font-size: 1.6rem; color: var(--text-dark); }
+
+/* ДЕТАЛЬНАЯ СТРАНИЦА ТОВАРА */
+.prod-detail { display: flex; flex-direction: column; gap: 30px; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.05); border: 2px solid var(--border); position: relative; overflow: hidden; margin-top: 20px; }
+.prod-detail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), #fbbf24); }
+.detail-img-box { width: 100%; max-height: 350px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: transform 0.4s ease; background: #fff; }
+.detail-img-box:hover { transform: scale(1.02); }
+.detail-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; animation: popInBounce 0.6s ease; }
+.detail-info h1 { font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; }
+.detail-price { font-size: 3rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; animation: slideUpFade 0.6s ease; text-shadow: 1px 1px 2px rgba(249,115,22,0.1); }
+
+/* СПИСОК С ХАРАКТЕРИСТИКАМИ */
+.features-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; }
+.feature-item { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; color: #475569; font-weight: 500; }
+.feature-icon { width: 24px; height: 24px; color: #10b981; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #ecfdf5; border-radius: 50%; }
+
+/* КНОПКА ПОЗВОНИТЬ */
+.call-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s; animation: pulseBtn 2s infinite; border: none; cursor: pointer; width: 100%; }
+.call-btn svg { width: 24px; height: 24px; transition: transform 0.3s ease; }
+.call-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(249,115,22,0.4); animation: none; }
+.call-btn:hover svg { transform: rotate(15deg) scale(1.1); }
+.call-btn:active { transform: scale(0.95); }
+
+/* Футер */
+.footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 0; font-size: .9rem; margin-top: 50px; border-top: 3px solid var(--primary); }
+.mobile-call { display: flex; position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 700; z-index: 100; justify-content: center; transition: 0.2s; animation: pulseBtn 2s infinite; gap: 10px; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.mobile-call svg { width: 20px; height: 20px; }
+.mobile-call:active { transform: scale(0.95); animation: none; }
+
+@media(min-width:640px){
+    .header-content { flex-direction: row; justify-content: space-between; }
+    .grid { grid-template-columns: repeat(3,1fr); }
+    .mobile-call { display: none; }
+    body { padding-bottom: 0; }
+    .prod-detail { flex-direction: row; align-items: flex-start; }
+    .detail-img-box { width: 50%; }
+    .detail-info { flex: 1; }
+    .filters select { flex: none; width: 200px; }
+}
+@media(min-width:1024px){ .grid { grid-template-columns: repeat(4,1fr); } }
+</style>
 </head>
 <body>
 
-  <header class="header">
-    <div class="container header-content">
-      <a href="index.html" class="logo">Аренда и Ремонт<br><span>Инструмента</span></a>
-      <div class="nav-menu">
-        <a href="index.html">Главная</a>
-        <a href="catalog.html" class="active">Каталог</a>
-        <a href="index.html#repair">Ремонт</a>
-        <a href="index.html#contact">Контакты</a>
+<header class="header">
+  <div class="container header-content">
+    <a href="index.html" class="logo">Аренда и Ремонт<br><span>Инструмента</span></a>
+    <div class="nav-menu">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html" class="active">Каталог</a>
+      <a href="index.html#contact">Контакты</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  
+  <!-- СТРАНИЦА 1: ВСЕ КАТЕГОРИИ -->
+  <div id="view-cats" class="page active">
+    <div class="title"><h1>Каталог инструмента</h1><p>Выберите нужную категорию</p></div>
+    
+    <div class="controls">
+      <input type="text" id="search-cat" class="search-box" placeholder="🔍 Поиск категории..." oninput="renderCats()">
+      <div class="filters">
+        <select id="sort-cat" onchange="renderCats()">
+          <option value="alpha-asc">По алфавиту (А-Я)</option>
+          <option value="alpha-desc">По алфавиту (Я-А)</option>
+          <option value="price-asc">По цене (сначала дешевле)</option>
+          <option value="price-desc">По цене (сначала дороже)</option>
+        </select>
+      </div>
+      <div class="alphabet" id="alphabet-filters"></div>
+    </div>
+
+    <div class="grid" id="cats-grid"></div>
+  </div>
+
+  <!-- СТРАНИЦА 2: ТОВАРЫ В КАТЕГОРИИ -->
+  <div id="view-cat" class="page">
+    <div class="back-header">
+      <!-- Возврат к списку всех категорий -->
+      <a href="#" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Назад
+      </a>
+      <h2 id="cat-title"></h2>
+    </div>
+    
+    <div class="controls">
+      <input type="text" id="search-item" class="search-box" placeholder="🔍 Поиск инструмента..." oninput="renderItems(currentCat)">
+      <div class="filters">
+        <select id="sort-item" onchange="renderItems(currentCat)">
+          <option value="alpha-asc">По алфавиту (А-Я)</option>
+          <option value="alpha-desc">По алфавиту (Я-А)</option>
+          <option value="price-asc">По цене (сначала дешевле)</option>
+          <option value="price-desc">По цене (сначала дороже)</option>
+        </select>
       </div>
     </div>
-  </header>
 
-  <div class="container">
-    <div class="page-title">
-      <h1>Каталог инструмента</h1>
-      <p>Нажмите на карточку, чтобы узнать точную цену и позвонить</p>
+    <div class="grid" id="items-grid"></div>
+  </div>
+
+  <!-- СТРАНИЦА 3: КОНКРЕТНЫЙ ТОВАР -->
+  <div id="view-prod" class="page">
+    <div class="back-header">
+      <!-- Возврат к списку товаров текущей категории -->
+      <a href="#" class="back-btn" id="back-to-cat-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Назад в категорию
+      </a>
     </div>
-
-    <section class="section">
-      <div class="catalog-grid">
+    
+    <div class="prod-detail">
+      <div class="detail-img-box" id="p-img"></div>
+      <div class="detail-info">
+        <h1 id="p-title"></h1>
+        <div class="detail-price" id="p-price"></div>
         
-        <!-- 1. Бетономешалка -->
-        <div class="product-card" onclick="openModal('Бетономешалка 180', '900 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Бетономешалка 180</div><div class="product-price">900 ₽</div><button class="product-btn">Подробнее</button></div>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            Отличное состояние
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            Проверка при выдаче
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            Гарантия качества
+          </div>
         </div>
 
-        <!-- 2. Бензорез -->
-        <div class="product-card" onclick="openModal('Бензорез', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Бензорез</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+        <a href="tel:+79022977999" class="call-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Позвонить: 8 (902) 297-79-99
+        </a>
+      </div>
+    </div>
+  </div>
 
-        <!-- 3. Бензопила Hanskonner -->
-        <div class="product-card" onclick="openModal('Бензопила Hanskonner', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Бензопила Hanskonner</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+</div>
 
-        <!-- 4. Баллон Пропан -->
-        <div class="product-card" onclick="openModal('Баллон Пропан', '900 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Баллон Пропан</div><div class="product-price">900 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+<footer class="footer"><div class="container">© 2025 ООО «ТСА-СТРОЙ»</div></footer>
+<a href="tel:+79022977999" class="mobile-call">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+    Позвонить
+</a>
 
-        <!-- 5. Баллон Кислородный -->
-        <div class="product-card" onclick="openModal('Баллон Кислородный', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Баллон Кислородный</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+<script>
+// Полная база данных со всеми инструментами
+const DB = {
+  'udliniteli': { t: 'Удлинители', items: [
+    {id:'ud1', t:'Удлинитель 30м', p:'150 ₽', img:'https://avatars.mds.yandex.net/get-mpic/4828674/img_id335441104514677705.jpeg/orig'},
+    {id:'ud2', t:'Удлинитель Шнек 400мм', p:'100 ₽', img:''},
+    {id:'ud3', t:'Удлинитель Шнек 1000мм', p:'100 ₽', img:''}
+  ]},
+  'perforatory': { t: 'Перфораторы и отбойные молотки', items: [
+    {id:'p1', t:'Перфоратор Interskol', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/12414275/1000x1000/156665609.jpg'},
+    {id:'p2', t:'Перфоратор Вихрь SSD MAX', p:'1000 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/7335919/2400x1600/90057374.jpg'},
+    {id:'p3', t:'Перфоратор Perfomance', p:'900 ₽', img:'https://avatars.mds.yandex.net/get-mpic/12140066/2a0000018d2d51dd9a56eb82ce618e59f539/orig'},
+    {id:'p4', t:'Отбойный молоток Sturm', p:'1200 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/145/967/953/221/233/4/100065714435b4.png'},
+    {id:'p5', t:'Отбойный молоток Messer', p:'1000 ₽', img:'https://zvonmarket.ru/upload/iblock/dab/885p0osdvie8tb3nhr0eaaw7q5uenx3s.jpg'}
+  ]},
+  'ushm': { t: 'УШМ (Болгарки)', items: [
+    {id:'u1', t:'УШМ 125', p:'500 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16437846/2a0000019d8c71086f0852c8ee4eb1b81cc5/orig'},
+    {id:'u2', t:'УШМ 150', p:'600 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/461/356/210/221/048/100065700838b0.png'},
+    {id:'u3', t:'УШМ 230', p:'700 ₽', img:'https://avatars.mds.yandex.net/get-mpic/4866824/img_id5089168990837075472.jpeg/orig'},
+    {id:'u4', t:'УШМ АКБ ONEVAN 125', p:'800 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-g/10816650664.jpg'},
+    {id:'u5', t:'УШМ АКБ hanskonner 125', p:'800 ₽', img:'https://stroybatinfo.ru/upload/iblock/37e/37eac124e46785a1e6393b97b9bd4aa2.jpg'}
+  ]},
+  'shneki': { t: 'Шнеки и Буры', items: [
+    {id:'sh1', t:'Шнек 100х800', p:'450 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063280/2400x1600/132198554.jpg'},
+    {id:'sh2', t:'Шнек 150х800', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063299/2400x1600/126369194.jpg'},
+    {id:'sh3', t:'Шнек 200', p:'550 ₽', img:'https://avatars.mds.yandex.net/i?id=a31d5b7a7338ea23e3b8bbb6d9f96745b7ca55c9-3600087-images-thumbs&n=13'},
+    {id:'sh4', t:'Шнек 250х800', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=6ade491a75e53af27677bba197160d734a104151-3861735-images-thumbs&n=13'},
+    {id:'sh5', t:'Шнек 300х1000', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=951f6dc86172228476cae2630bf9e654b492260f-5236810-images-thumbs&n=13'},
+    {id:'sh6', t:'Шнек Удлинитель 1000мм', p:'200 ₽', img:'https://cdn.tze1.ru/9n/fda697fc-9652-11e9-aa46-e8611f100fce/0000007028.jpg'},
+    {id:'sh7', t:'Шнек Удлинитель 500мм', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=7007329ed9ae0e5bfdc10b28649e9c00c937bdf3-5487054-images-thumbs&n=13'},
+    {id:'sh8', t:'Бур 30,35 SSD', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=2525ecca819e81ae918eefad5c1903ed7f939c38-4080015-images-thumbs&n=13'},
+    {id:'sh9', t:'Бур 16,20,22,24,25 SSD', p:'500 ₽', img:'https://avatars.mds.yandex.net/get-mpic/5232221/2a00000191c2f3b5033225c6659028df3381/orig'},
+    {id:'sh10', t:'Бур 18 SSD MAX', p:'550 ₽', img:'https://avatars.mds.yandex.net/i?id=74dba7b81349d1188d873e1ea95abf2cf4026b43-5016167-images-thumbs&n=13'},
+    {id:'sh11', t:'Бур 35,40 SSD MAX', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=b6694e54636aefcd16bc5c7a1fa0e697170308bc-5222228-images-thumbs&n=13'}
+  ]},
+  'svarka': { t: 'Сварка', items: [
+    {id:'s1', t:'Сварочный п/а Zitrek 180', p:'1000 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-74/744/066/411/181/639/600013219354b6.jpg'},
+    {id:'s2', t:'Сварочный аппарат Ресанта ПРО 250', p:'900 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/svarochnoe-oborudovanie/136180/1000x1000/201073353.jpg'},
+    {id:'s3', t:'Сварочный аппарат Real 220', p:'800 ₽', img:'https://basket-13.wbbasket.ru/vol1985/part198597/198597895/images/big/1.webp'},
+    {id:'s4', t:'Сварка ПВХ', p:'700 ₽', img:'https://megadrel.ru/upload/iblock/556/gnadx0gbb081zruowd9hhaplh0dy8v4k.jpeg'},
+    {id:'s5', t:'Сварочная маска Д', p:'100 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-instrumenta/1390509/1000x1000/51447251.jpg'}
+  ]},
+  'dreli': { t: 'Дрели и Шуруповерты', items: [
+    {id:'d1', t:'Дрель ГРАД М', p:'500 ₽', img:'https://instrumentmarket.ru/upload/iblock/a16/2wc37flavb83k1hwzt7lp63wved69h4g/drel_s_udarom_grad_m_du_850_850vt_zvp_13mm_2_800ob_m_.jpg'},
+    {id:'d2', t:'Шуруповерт Makita Мал.', p:'500 ₽', img:'https://img.positronica.ru/items/2010807_v01_b.webp'}
+  ]},
+  'pily': { t: 'Пилы и Лобзики', items: [
+    {id:'pi1', t:'Циркулярная пила', p:'600 ₽', img:'https://cdn.kuvalda.ru/data/file_resize/product/8a/7c/b6/landing-pila-cirkuljarnaja-setevaja-bosch-gks-190-1.jpg'},
+    {id:'pi2', t:'Пила Эл.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/12621455/2a000001903ac959867dfcbc90cc82b495ae/orig'},
+    {id:'pi3', t:'Пила Мини.', p:'500 ₽', img:'https://basket-21.wbbasket.ru/vol3648/part364880/364880403/images/big/1.webp'},
+    {id:'pi4', t:'Торцовочная пила DCA', p:'1000 ₽', img:'https://cdn21vek.by/imgproxy/large/plain/img/galleries/10353/878/10353878_c7dd44d43537baf014875f6598bc1a75.jpg'},
+    {id:'pi5', t:'Лобзик', p:'600 ₽', img:'https://basket-38.wbbasket.ru/vol8607/part860756/860756146/images/big/1.webp'},
+    {id:'pi6', t:'Сабельная пила DEKO 1300', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=cdc419f2a789a9edc870951fde83f8cb4923e0c9-10815668-images-thumbs&n=13'},
+    {id:'pi7', t:'Рубанок Зубр 950Вт', p:'700 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16396243/pice8e0fcbc6c35b16c7994dcd0854eff4e/orig'}
+  ]},
+  'shlifmashiny': { t: 'Шлифмашинки и Фрезеры', items: [
+    {id:'shl1', t:'Шлейфмаш. Эксцентр. Faevorite', p:'600 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/shlifovalnye-mashinki-shlifmashinki/19628370/2400x1600/206625482.jpg'},
+    {id:'shl2', t:'Шлейфмаш. Эксцентр. DEKO', p:'600 ₽', img:'https://cdn.poryadok.ru/upload/iblock/681/6816c1d08d33d62a334c4f78c31b0a51.jpg'},
+    {id:'shl3', t:'Шлейфмаш. Жираф. BOSH', p:'1000 ₽', img:'https://rodmon.ru/upload/iblock/900/heywsw44ws996bpeunt7s2md0txy5t7k.jpg'},
+    {id:'shl4', t:'Фрезер.маш.Вихрь 1900Вт.', p:'700 ₽', img:'https://apelsin.ru/upload/iblock/0dd/0dde62b8d80e3290f9ea9bca8eea9e98.jpg'}
+  ]},
+  'kompressory': { t: 'Компрессоры', items: [
+    {id:'k1', t:'Компрессор 50л 86ар. 500л/мин', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e547a39444b3af3823b1975afcf385e8f92a51c0-9871231-images-thumbs&n=13'},
+    {id:'k2', t:'Компрессор Мал', p:'800 ₽', img:'https://avatars.mds.yandex.net/i?id=b7d77ff298657c4c0091dfe78b90c56905be254d-4418430-images-thumbs&n=13'}
+  ]},
+  'pylesosy': { t: 'Пылесосы', items: [
+    {id:'py1', t:'Пылесос Sturm 1700Вт. 30л.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=9d17e28e6eae89bcc5e4726abbdc5ef40736ecba-12634740-images-thumbs&n=13'},
+    {id:'py2', t:'Пылесос Fin Polar', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=72bea0734fc7392b09f1931a9e1f102b68187c55-16513077-images-thumbs&n=13'}
+  ]},
+  'lestnicy': { t: 'Лестницы и Стремянки', items: [
+    {id:'l1', t:'Стремянка 6 ст.', p:'300 ₽', img:'https://avatars.mds.yandex.net/i?id=cd59cfbb20b2f1df88971c507317c0e08e0e9994-10500862-images-thumbs&n=13'},
+    {id:'l2', t:'Стремянка 7 ст.', p:'400 ₽', img:'https://avatars.mds.yandex.net/i?id=fcc0ebf9196c09ef5541579342fe68afd366d630-5231899-images-thumbs&n=13'},
+    {id:'l3', t:'Лестница 3х секционная (6.5м)', p:'800 ₽', img:'https://avatars.mds.yandex.net/i?id=d85f434c2a97884ceafd4831a7f9af7a6caa55ff-5216657-images-thumbs&n=13'}
+  ]},
+  'motobury': { t: 'Мотобуры (Бензобуры)', items: [
+    {id:'r18', t:'Мотобур Huter 3,2лс 2400вт', p:'900 ₽', img:'https://cdn.pandashop.md/i/?i=/i/products/260/2604563.jpg&w=200&h=200'}
+  ]},
+  'vozduhoduvki': { t: 'Воздуходувки', items: [
+    {id:'r4', t:'Воздуходувка', p:'1200 ₽', img:'https://avatars.mds.yandex.net/i?id=bc818dc7ccc8b41de38e926f49e8e780_l-4034519-images-thumbs&n=13'}
+  ] },
+  'generatory': { t: 'Генераторы', items: [
+    {id:'r5', t:'Генератор Fubag BS 5500', p:'1300 ₽', img:'https://avatars.mds.yandex.net/i?id=a44d5f912a6bb1dca61416a68d8e1d4ca26a1d8b-4904627-images-thumbs&n=13'}
+  ] },
+  'gaykovery': { t: 'Гайковерты', items: [
+    {id:'r6', t:'Гайковерт АКБ DeWALT', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=35e8102933c7f6ea75969ada680fcafe8168c14e-5681290-images-thumbs&n=13'}
+  ] },
+  'gorelki': { t: 'Газовые горелки', items: [
+    {id:'r7', t:'Газовая горелка', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=1eff8a929d0c8ab88378ebf9a92f4f504ec56fe8-5710342-images-thumbs&n=13'}
+  ] },
+  'detektory': { t: 'Детекторы проводки', items: [
+    {id:'r8', t:'Детектор проводки', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=6dee071727f7f963c4d9e6fcc21cb36d38736093-5635981-images-thumbs&n=13'}
+  ] },
+  'domkraty': { t: 'Домкраты', items: [
+    {id:'r9', t:'Домкрат 1/10т', p:'400 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16413949/2a0000019bfd9e0aafed7b8f58bff422c63a/orig'}
+  ] },
+  'nasosy': { t: 'Насосы', items: [
+    {id:'r10', t:'Дренальный насос 900', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=669246afdc496429e137379e279a9dd29d0307ea-4809955-images-thumbs&n=13'}
+  ] },
+  'klepalniki': { t: 'Клепальники', items: [
+    {id:'r11', t:'Клепальник', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=5d6fb9aba729c5c8bd3b52c1e332508c663a8ab5-5451798-images-thumbs&n=13'}
+  ] },
+  'kuvaldy': { t: 'Кувалды', items: [
+    {id:'r12', t:'Кувалда', p:'250 ₽', img:'https://avatars.mds.yandex.net/i?id=c997862c4021c62ecda3bc066cac819ec43ba57c-5232446-images-thumbs&n=13'}
+  ] },
+  'lomy': { t: 'Ломы', items: [
+    {id:'r13', t:'Лом ср.', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=2db47fe4ea13b8286c3216929a3fd720b24a659be43b4a95-12388455-images-thumbs&n=13'},
+    {id:'r14', t:'Лом бол.', p:'250 ₽', img:'https://avatars.mds.yandex.net/i?id=2db47fe4ea13b8286c3216929a3fd720b24a659be43b4a95-12388455-images-thumbs&n=13'}
+  ]},
+  'lebedki': { t: 'Лебедки', items: [
+    {id:'r15', t:'Лебедка ЭЛ-125/250', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=1b3de26fe1ac1b9d409f458fb24b6b596a786d98-5247044-images-thumbs&n=13'},
+    {id:'r16', t:'Лебедка Ручная', p:'300 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-j/c1000/7088612275.jpg'}
+  ]},
+  'izmeritelnye': { t: 'Измерительные приборы', items: [
+    {id:'r17', t:'Лазерный уровень Makita', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=a7c93e9c08cddc185d9403507fb2869b4a3503ba-4250988-images-thumbs&n=13'},
+    {id:'r29', t:'Тепловизор AMO T820', p:'1000 ₽', img:''}
+  ]},
+  'moyki': { t: 'Мойки высокого давления', items: [
+    {id:'r19', t:'Мойка высокого давления', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=2e92a47391cffd8bf96b98526c32e159c0387608-8331156-images-thumbs&n=13'}
+  ] },
+  'miksery': { t: 'Миксеры', items: [
+    {id:'r20', t:'Миксер', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=e95a9730a7a7544bbd4c5a53e4491b3fa4b43652-12658945-images-thumbs&n=13'}
+  ] },
+  'opresovschiki': { t: 'Опресовщики', items: [
+    {id:'r21', t:'Опресовщик 0-63 бара', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=f6898e37d124949eef94415e58711d74d6d7ea74-5234975-images-thumbs&n=13'}
+  ] },
+  'plitkorezy': { t: 'Плиткорезы', items: [
+    {id:'r22', t:'Плиткорез Эл. FSC 180', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=c420dfcc19ea3e1310d8d70ee73c949b266f9416-5677241-images-thumbs&n=13'},
+    {id:'r23', t:'Плиткорез руч.', p:'400 ₽', img:'https://avatars.mds.yandex.net/i?id=f067e6ba71bef7acb2f53f4dd79255534ce09d43-4303774-images-thumbs&n=13'}
+  ]},
+  'prozhjektory': { t: 'Прожекторы', items: [
+    {id:'r24', t:'Прожектор', p:'50 ₽', img:'https://avatars.mds.yandex.net/i?id=565e00a5df31d2ffef538378034c63d77900aafd-5603715-images-thumbs&n=13'}
+  ] },
+  'rezaki': { t: 'Резаки', items: [
+    {id:'r25', t:'Резак+Баллоны', p:'2500 ₽', img:'https://avatars.mds.yandex.net/i?id=300c2445beb94f983382e9443f763b250ac708e9-12585911-images-thumbs&n=13'},
+    {id:'r26', t:'Резак', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=1abb78cc08597d5567f7901b2d6ae9c036c4be5e-11492537-images-thumbs&n=13'}
+  ]},
+  'renovatory': { t: 'Реноваторы', items: [
+    {id:'r27', t:'Реноватор DEKO 600ВТ', p:'600 ₽', img:'https://avatars.mds.yandex.net/get-mpic/6453326/img_id5624039835767580682.jpeg/orig'}
+  ] },
+  'steplery': { t: 'Степлеры', items: [
+    {id:'r28', t:'Степлер строительный', p:'150 ₽', img:'https://avatars.mds.yandex.net/i?id=8c72ffc7c14884d110d59ad6136cee69c434a8d9-5221376-images-thumbs&n=13'}
+  ] },
+  'teplopushki': { t: 'Тепловые пушки', items: [
+    {id:'r30', t:'Теплопушка Ballu 17К', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=65370cb47b60783c30334a80dba80ac65d799b74-11867893-images-thumbs&n=13'}
+  ] },
+  'tali': { t: 'Тали', items: [
+    {id:'r31', t:'Таль Рычажная 3т', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=4203066ec9f61969c6940aba0a1f51c5260d92bc-5873534-images-thumbs&n=13'}
+  ] },
+  'trimmery': { t: 'Триммеры', items: [
+    {id:'r32', t:'Триммер Парма', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e2c1054de25e879981afe10e1a32a89345386494-4743742-images-thumbs&n=13'}
+  ] },
+  'feny': { t: 'Фены технические', items: [
+    {id:'r33', t:'Фен патриот', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=6a715744934c93675e7563440062c7b0eae05bcf-12166422-images-thumbs&n=13'}
+  ] },
+  'osnastka': { t: 'Оснастка и насадки', items: [
+    {id:'r34', t:'Насадка на УШМ (Антипыль)', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=b1dc80b104b535d9cab95cd2149004941fbd0aa2-4903222-images-thumbs&n=13'}
+  ] },
+  'benzopily': { t: 'Бензопилы и Бензорезы', items: [
+    {id:'bp1', t:'Бензопила hanskonner', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/5365919/img_id1884980393196573580.jpeg/orig'},
+    {id:'bp2', t:'Бензорез', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/1603927/img_id6958938792989727374.jpeg/orig'}
+  ]},
+  'betonomeshalki': { t: 'Бетономешалки', items: [
+    {id:'b1', t:'Бетономешалка 180', p:'900 ₽', img:'https://cdn.etm.ru/ipro/2149/21183041.jpg'}
+  ]},
+  'vibro': { t: 'Виброплиты и Вибраторы', items: [
+    {id:'v1', t:'Виброплита GIGANT', p:'1200 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnoe-oborudovanie-i-tehnika/vibrotehnika/3730872/2400x1600/88735713.jpg'},
+    {id:'v2', t:'Вибратор Gigant 1.4м', p:'700 ₽', img:'https://cdn.kuvalda.ru/data/file_resize/product/c7/ae/74/landing-c7ae744ab1a316bfac1b7a4719d24adb.jpg'},
+    {id:'v3', t:'Вибратор DDE 2м', p:'800 ₽', img:'https://avatars.mds.yandex.net/i?id=a33ea420daabff2ad431a90659a1a66a_l-5888199-images-thumbs&n=13'}
+  ]},
+  'ballony': { t: 'Баллоны', items: [
+    {id:'r1', t:'Баллон Пропан', p:'900 ₽', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
+    {id:'r2', t:'Баллон Кислородный', p:'500 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-t/7286572541.jpg'}
+  ]},
+  'boltoresy': { t: 'Болторезы', items: [
+    {id:'r3', t:'Болторез ручной', p:'800 ₽', img:'https://avatars.mds.yandex.net/get-mpic/13750035/2a00000198c1aa14f9b5d090c3729ad306ee/orig'}
+  ]}
+};
 
-        <!-- 6. Болторез ручной -->
-        <div class="product-card" onclick="openModal('Болторез ручной', '800 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Болторез ручной</div><div class="product-price">800 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+let currentCat = '';
+let filterLetter = '';
 
-        <!-- 7. Виброплита GIGANT -->
-        <div class="product-card" onclick="openModal('Виброплита GIGANT', '400 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Виброплита GIGANT</div><div class="product-price">400 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+function getMinPrice(cat) {
+  let min = Infinity;
+  cat.items.forEach(i => { let num = parseInt(i.p.replace(/\D/g,'')); if (num && num < min) min = num; });
+  return min === Infinity ? 0 : min;
+}
 
-        <!-- 8. Воздуходувка -->
-        <div class="product-card" onclick="openModal('Воздуходувка', '1200 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Воздуходувка</div><div class="product-price">1200 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+function renderAlphabet() {
+  const letters = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ".split("");
+  let html = `<button onclick="setLetter('')" class="${filterLetter===''?'active':''}">Все</button>`;
+  letters.forEach(l => { html += `<button onclick="setLetter('${l}')" class="${filterLetter===l?'active':''}">${l}</button>`; });
+  document.getElementById('alphabet-filters').innerHTML = html;
+}
 
-        <!-- 9. Вибратор Gigant 1.4м -->
-        <div class="product-card" onclick="openModal('Вибратор Gigant 1.4м', '1200 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Вибратор Gigant 1.4м</div><div class="product-price">1200 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+function setLetter(l) { filterLetter = l; renderAlphabet(); renderCats(); }
 
-        <!-- 10. Вибратор DDE 2м -->
-        <div class="product-card" onclick="openModal('Вибратор DDE 2м', '700 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Вибратор DDE 2м</div><div class="product-price">700 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+function renderCats() {
+  const search = document.getElementById('search-cat').value.toLowerCase();
+  const sort = document.getElementById('sort-cat').value;
+  
+  let items = Object.entries(DB).filter(([key, data]) => {
+    const matchSearch = data.t.toLowerCase().includes(search);
+    const matchLetter = filterLetter === '' || data.t.toUpperCase().startsWith(filterLetter);
+    return matchSearch && matchLetter;
+  });
 
-        <!-- 11. Генератор Fubag BS 5500 -->
-        <div class="product-card" onclick="openModal('Генератор Fubag BS 5500', '800 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Генератор Fubag BS 5500</div><div class="product-price">800 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  items.sort((a, b) => {
+    if (sort === 'alpha-asc') return a[1].t.localeCompare(b[1].t);
+    if (sort === 'alpha-desc') return b[1].t.localeCompare(a[1].t);
+    if (sort === 'price-asc') return getMinPrice(a[1]) - getMinPrice(b[1]);
+    if (sort === 'price-desc') return getMinPrice(b[1]) - getMinPrice(a[1]);
+  });
 
-        <!-- 12. Гайковерт AKG DeWALT -->
-        <div class="product-card" onclick="openModal('Гайковерт AKG DeWALT', '1300 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Гайковерт AKG DeWALT</div><div class="product-price">1300 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  let html = '';
+  items.forEach(([key, c], index) => {
+    let delay = (index % 15) * 0.05; 
+    // Используем надежную ссылку href, браузер сам поменяет hash
+    html += `<a href="#${key}" class="cat-card stagger-item" style="animation-delay:${delay}s">
+      <div class="cat-title">${c.t}</div>
+      <div class="cat-count">${c.items.length} шт.</div>
+    </a>`;
+  });
+  document.getElementById('cats-grid').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:20px">Ничего не найдено</p>';
+}
 
-        <!-- 13. Газовая горелка -->
-        <div class="product-card" onclick="openModal('Газовая горелка', '700 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Газовая горелка</div><div class="product-price">700 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+function renderItems(catKey) {
+  const search = document.getElementById('search-item').value.toLowerCase();
+  const sort = document.getElementById('sort-item').value;
+  const cat = DB[catKey];
+  let items = cat.items.filter(item => item.t.toLowerCase().includes(search));
 
-        <!-- 14. Детектор проводки -->
-        <div class="product-card" onclick="openModal('Детектор проводки', '200 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Детектор проводки</div><div class="product-price">200 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  items.sort((a, b) => {
+    let pA = parseInt(a.p.replace(/\D/g,'')) || 0;
+    let pB = parseInt(b.p.replace(/\D/g,'')) || 0;
+    if (sort === 'alpha-asc') return a.t.localeCompare(b.t);
+    if (sort === 'alpha-desc') return b.t.localeCompare(a.t);
+    if (sort === 'price-asc') return pA - pB;
+    if (sort === 'price-desc') return pB - pA;
+  });
 
-        <!-- 15. Домкрат 1/10т -->
-        <div class="product-card" onclick="openModal('Домкрат 1/10т', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Домкрат 1/10т</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  let html = '';
+  items.forEach((item, index) => {
+    let delay = (index % 15) * 0.05;
+    let imgHtml = item.img ? `<img src="${item.img}" class="prod-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : `<div class="prod-img no-photo" style="display:flex">ФОТО</div>`;
+    let fallback = `<div class="prod-img no-photo" style="display:none">ФОТО</div>`;
+    
+    html += `<a href="#prod-${item.id}" class="prod-card stagger-item" style="animation-delay:${delay}s">
+      ${item.img ? imgHtml + fallback : fallback}
+      <div class="prod-title">${item.t}</div>
+      <div class="prod-price">${item.p} / сутки</div>
+    </a>`;
+  });
+  document.getElementById('items-grid').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:20px">Ничего не найдено</p>';
+}
 
-        <!-- 16. Дрель ГРАД М -->
-        <div class="product-card" onclick="openModal('Дрель ГРАД М', '400 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Дрель ГРАД М</div><div class="product-price">400 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+// ===== РОУТЕР (ГЛАВНАЯ ЛОГИКА ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ) =====
+function router() {
+  const hash = window.location.hash.replace('#', '');
+  
+  // 1. Скрываем абсолютно все страницы
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-        <!-- 17. Дрель (карточка с картинки) -->
-        <div class="product-card" onclick="openModal('Дрель, аккумуляторный инструмент', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Дрель, аккумуляторный инструмент</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  // 2. Если хэша нет - показываем категории
+  if (!hash) {
+    document.getElementById('view-cats').classList.add('active');
+    return;
+  }
 
-        <!-- 18. Дренальный насос 900 -->
-        <div class="product-card" onclick="openModal('Дренальный насос 900 258л до 8м.в', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Дренальный насос 900 258л до 8м.в</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+  // 3. Если открывается товар (начинается на prod-)
+  if (hash.startsWith('prod-')) {
+    const prodId = hash.replace('prod-', '');
+    let item = null;
+    
+    // Ищем этот товар во всей базе
+    for (let key in DB) {
+      let found = DB[key].items.find(i => i.id === prodId);
+      if (found) { 
+        item = found; 
+        currentCat = key; 
+        break; 
+      }
+    }
+    
+    if (item) {
+      // Настраиваем кнопку "Назад в категорию"
+      document.getElementById('back-to-cat-btn').href = `#${currentCat}`;
+      
+      // Заполняем данные
+      document.getElementById('p-title').innerText = item.t;
+      document.getElementById('p-price').innerText = item.p + ' / сутки';
+      
+      if (item.img) {
+        document.getElementById('p-img').innerHTML = `<img src="${item.img}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:1.5rem\\'>ФОТО</span>'">`;
+      } else {
+        document.getElementById('p-img').innerHTML = '<span style="color:#94a3b8;font-weight:bold;font-size:1.5rem">ФОТО</span>';
+      }
+      
+      // Показываем страницу товара
+      document.getElementById('view-prod').classList.add('active');
+    }
+  } 
+  // 4. Если открывается категория
+  else if (DB[hash]) {
+    currentCat = hash;
+    document.getElementById('cat-title').innerText = DB[hash].t;
+    document.getElementById('search-item').value = ''; 
+    renderItems(hash);
+    
+    // Показываем страницу категории
+    document.getElementById('view-cat').classList.add('active');
+  }
+}
 
-        <!-- 19. Компрессор 50л -->
-        <div class="product-card" onclick="openModal('Компрессор 50л 86ар. 500л/мин', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Компрессор 50л 86ар. 500л/мин</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+// Инициализация при загрузке
+renderAlphabet();
+renderCats();
 
-        <!-- 20. Компрессор Мал -->
-        <div class="product-card" onclick="openModal('Компрессор Мал', '800 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Компрессор Мал</div><div class="product-price">800 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
+// Слушаем изменения ссылки (нажатия на карточки)
+window.addEventListener('hashchange', router);
 
-        <!-- 21. Клепальник -->
-        <div class="product-card" onclick="openModal('Клепальник', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Клепальник</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 22. Кувалда -->
-        <div class="product-card" onclick="openModal('Кувалда', '250 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Кувалда</div><div class="product-price">250 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 23. Лобзик -->
-        <div class="product-card" onclick="openModal('Лобзик', '600 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лобзик</div><div class="product-price">600 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 24. Лестница 3х секционная (6.5м) -->
-        <div class="product-card" onclick="openModal('Лестница 3х секционная (6.5м)', '800 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лестница 3х секционная (6.5м)</div><div class="product-price">800 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 25. Лазерный уровень Makita -->
-        <div class="product-card" onclick="openModal('Лазерный уровень Makita', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лазерный уровень Makita</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 26. Лебедка ЭЛ-125/250 -->
-        <div class="product-card" onclick="openModal('Лебедка ЭЛ-125/250', '600 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лебедка ЭЛ-125/250</div><div class="product-price">600 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 27. Лебедка Ручная -->
-        <div class="product-card" onclick="openModal('Лебедка Ручная', '300 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лебедка Ручная</div><div class="product-price">300 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 28. Лом ср. -->
-        <div class="product-card" onclick="openModal('Лом ср.', '200 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лом ср.</div><div class="product-price">200 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 29. Лом бол. -->
-        <div class="product-card" onclick="openModal('Лом бол.', '250 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Лом бол.</div><div class="product-price">250 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 30. Миксер -->
-        <div class="product-card" onclick="openModal('Миксер', '600 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Миксер</div><div class="product-price">600 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 31. Мотобур Huter 3.2лс -->
-        <div class="product-card" onclick="openModal('Мотобур Huter 3,2лс 2400вт', '900 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Мотобур Huter 3,2лс 2400вт</div><div class="product-price">900 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 32. Мойка высокого давления -->
-        <div class="product-card" onclick="openModal('Мойка высокого давления', '700 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Мойка высокого давления</div><div class="product-price">700 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 33. Отбойный молоток Sturm -->
-        <div class="product-card" onclick="openModal('Отбойный молоток Sturm', '1200 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Отбойный молоток Sturm</div><div class="product-price">1200 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 34. Отбойный молоток Messer -->
-        <div class="product-card" onclick="openModal('Отбойный молоток Messer', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Отбойный молоток Messer</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 35. Опресовщик 0-63 бара -->
-        <div class="product-card" onclick="openModal('Опресовщик 0-63 бара', '600 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Опресовщик 0-63 бара</div><div class="product-price">600 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 36. Плиткорез Эл. FSC 180 -->
-        <div class="product-card" onclick="openModal('Плиткорез Эл. FSC 180', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Плиткорез Эл. FSC 180</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 37. Плиткорез руч. -->
-        <div class="product-card" onclick="openModal('Плиткорез руч.', '400 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Плиткорез руч.</div><div class="product-price">400 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 38. Перфоратор Interskol -->
-        <div class="product-card" onclick="openModal('Перфоратор Interskol', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Перфоратор Interskol</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 39. Перфоратор Вихрь SSD MAX -->
-        <div class="product-card" onclick="openModal('Перфоратор Вихрь SSD MAX', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Перфоратор Вихрь SSD MAX</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 40. Перфоратор Perfomance -->
-        <div class="product-card" onclick="openModal('Перфоратор Perfomance', '900 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Перфоратор Perfomance</div><div class="product-price">900 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 41. Прожектор -->
-        <div class="product-card" onclick="openModal('Прожектор', '50 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Прожектор</div><div class="product-price">50 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 42. Пылесос Sturm 1700Вт 30л -->
-        <div class="product-card" onclick="openModal('Пылесос Sturm 1700Вт. 30л.', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Пылесос Sturm 1700Вт. 30л.</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 43. Пылесос Fin Polar -->
-        <div class="product-card" onclick="openModal('Пылесос Fin Polar', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Пылесос Fin Polar</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 44. Пила Эл. -->
-        <div class="product-card" onclick="openModal('Пила Эл.', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Пила Эл.</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 45. Пила Мини -->
-        <div class="product-card" onclick="openModal('Пила Мини.', '500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Пила Мини.</div><div class="product-price">500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 46. Реноватор DEKO 600ВТ -->
-        <div class="product-card" onclick="openModal('Реноватор DEKO 600ВТ', '600 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Реноватор DEKO 600ВТ</div><div class="product-price">600 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 47. Резак+Баллоны -->
-        <div class="product-card" onclick="openModal('Резак+Баллоны', '2500 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Резак+Баллоны</div><div class="product-price">2500 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 48. Резак -->
-        <div class="product-card" onclick="openModal('Резак', '1000 ₽', '+79022977999', 'Аренда инструмента')">
-          <div class="product-img"></div>
-          <div class="product-info"><div class="product-title">Резак</div><div class="product-price">1000 ₽</div><button class="product-btn">Подробнее</button></div>
-        </div>
-
-        <!-- 49. Рубанок Зубр 950Вт -->
-        <div class="product-card" onclick="openModal('Рубанок Зубр 950Вт. Шир.обр.82мм', '700 ₽', '+790
+// Если пользователь обновил страницу с уже открытой категорией/товаром
+window.addEventListener('load', () => {
+  if (window.location.hash) {
+    router();
+  }
+});
+</script>
+</body>
+</html>
