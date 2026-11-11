@@ -1,515 +1,375 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Каталог инструмента</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23f97316'/%3E%3Cpath d='M35 70L45 60M60 40L70 30M52 52C56 56 60 56 64 52C68 48 68 44 64 40L52 52Z' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
-<style>
-:root {
-    --primary: #f97316;
-    --primary-hover: #ea580c;
-    --primary-light: #fff7ed;
-    --text-dark: #0f172a;
-    --text-gray: #64748b;
-    --border: #e2e8f0;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: linear-gradient(135deg, #fff7ed 0%, #f8fafc 50%, #ffedd5 100%);
-    background-size: 200% 200%;
-    animation: gradientBG 15s ease infinite;
-    color: #1e293b;
-    line-height: 1.6;
-    padding-bottom: 80px;
-    overflow-x: hidden;
-}
-@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Аренда и Ремонт Инструмента — Тольятти</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23f97316'/%3E%3Cpath d='M35 70L45 60M60 40L70 30M52 52C56 56 60 56 64 52C68 48 68 44 64 40L52 52Z' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 
-/* Шапка */
-.header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); color: #fff; padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,.15); border-bottom: 3px solid var(--primary); }
-.header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; text-decoration: none; color: #fff; text-align: left; line-height: 1.1; }
-.logo svg { width: 36px; height: 36px; flex-shrink: 0; transition: transform 0.3s ease; }
-.logo:hover svg { transform: rotate(-15deg) scale(1.1); }
-.logo-text { display: flex; flex-direction: column; }
-.logo span { color: var(--primary); }
-.nav-menu { display: flex; gap: 25px; margin-top: 10px; }
-.nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; transition: color 0.3s; position: relative; }
-.nav-menu a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
-.nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
-.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; color: #1e293b; line-height: 1.5; padding-bottom: 90px; overflow-x: hidden; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Анимации */
-@keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes popInBounce { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 60% { opacity: 1; transform: scale(1.02) translateY(-3px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-@keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(249, 115, 22, 0); } 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); } }
-.page { display: none; }
-.page.active { display: block; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.stagger-item { animation: popInBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(20px, -30px) scale(1.1); } 100% { transform: translate(0, 0) scale(1); } }
 
-/* Управление */
-.title { text-align: center; padding: 40px 0 20px; }
-.title h1 { font-size: 2.2rem; color: var(--text-dark); font-weight: 800; }
-.title p { color: var(--text-gray); margin-top: 10px; font-size: 1.1rem; }
-.controls { background: #fff; padding: 20px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,.04); border: 1px solid var(--border); margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; }
-.search-box { width: 100%; padding: 14px 20px; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; outline: none; transition: 0.3s; background: #f8fafc; }
-.search-box:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
-.filters { display: flex; gap: 10px; flex-wrap: wrap; }
-.filters select { flex: 1; padding: 12px 15px; border: 2px solid var(--border); border-radius: 10px; font-size: .95rem; outline: none; background: #fff; cursor: pointer; }
-.alphabet { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 5px; }
-.alphabet button { background: #f1f5f9; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #475569; transition: all 0.2s; }
-.alphabet button:hover { background: #fed7aa; color: var(--primary-hover); }
-.alphabet button.active { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; border-color: transparent; }
+    .animate-up { animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    
+    /* ===== ШАПКА ===== */
+    .header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); color: #fff; padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,.15); border-bottom: 3px solid #f97316; }
+    .header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; text-decoration: none; color: #fff; text-align: left; line-height: 1.1; }
+    .logo svg { width: 36px; height: 36px; flex-shrink: 0; transition: transform 0.3s ease; }
+    .logo:hover svg { transform: rotate(-15deg) scale(1.1); }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo span { color: #f97316; }
+    .nav-menu { display: flex; gap: 25px; margin-top: 10px; }
+    .nav-menu a { color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 1rem; transition: color 0.3s ease; position: relative; }
+    .nav-menu a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #f97316; transition: width 0.3s ease; }
+    .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+    .nav-menu a:hover, .nav-menu a.active { color: #f97316; }
 
-/* Сетки */
-.grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-bottom: 40px; }
+    /* ===== ГЛАВНЫЙ ЭКРАН (Все прижато, без пустот) ===== */
+    .hero { background: #0f172a; color: #fff; padding: 30px 0 40px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; width: 400px; height: 400px; background: rgba(249, 115, 22, 0.3); border-radius: 50%; top: -100px; left: -100px; filter: blur(80px); animation: floatOrb 8s ease-in-out infinite; }
+    .hero::after { content: ''; position: absolute; width: 300px; height: 300px; background: rgba(56, 189, 248, 0.2); border-radius: 50%; bottom: -50px; right: -50px; filter: blur(60px); animation: floatOrb 10s ease-in-out infinite reverse; }
+    .hero .container { position: relative; z-index: 1; }
+    
+    /* Ключик */
+    .hero-icon { width: 45px; height: 45px; margin: 0 auto 10px; color: #f97316; }
 
-/* СТИЛЬНЫЕ КАРТОЧКИ С КАРТИНКАМИ */
-.cat-card, .prod-card {
-    background: #fff; border: 2px solid var(--border); border-radius: 16px;
-    overflow: hidden; cursor: pointer; text-decoration: none; color: inherit;
-    display: flex; flex-direction: column;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 10px rgba(0,0,0,.02); position: relative;
-}
-.cat-card:hover, .prod-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
-    border-color: var(--primary); z-index: 2;
-}
+    /* Заголовок и текст */
+    .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; color: #fff; }
+    .hero h1 span { color: #f97316; }
+    .hero p { font-size: 1.1rem; color: #cbd5e1; max-width: 600px; margin: 0 auto 20px; }
 
-/* Картинка категории */
-.cat-image-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
-.cat-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
-.cat-card:hover .cat-image-box img { transform: scale(1.1); }
-.cat-image-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
+    /* Кнопка Смотреть каталог */
+    .btn-main { display: inline-block; background: transparent; color: #fff; text-decoration: none; padding: 14px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; border: 2px solid #f97316; cursor: pointer; text-align: center; margin-bottom: 20px; }
+    .btn-main:hover { background: #f97316; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4); }
 
-/* Текст категории */
-.cat-info { padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; }
-.cat-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
-.cat-count { font-size: .85rem; color: var(--text-gray); background: #f1f5f9; padding: 2px 10px; border-radius: 20px; margin-top: auto; transition: all 0.3s; }
-.cat-card:hover .cat-count { background: var(--primary-light); color: var(--primary-hover); }
+    /* Преимущества на главном экране */
+    .hero-stats { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .stat-item { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(5px); font-size: 0.85rem; color: #e2e8f0; font-weight: 500;}
+    .stat-item svg { width: 16px; height: 16px; color: #f97316; }
 
-/* Карточка товара */
-.prod-img-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
-.prod-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
-.prod-card:hover .prod-img-box img { transform: scale(1.1); }
-.prod-img-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
-.prod-info { padding: 15px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
-.prod-title { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; flex-grow: 1; }
-.prod-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 10px; border-radius: 8px; margin-top: auto; transition: all 0.3s; }
-.prod-card:hover .prod-price { background: var(--primary); color: #fff; }
+    /* ===== СЕКЦИИ ===== */
+    .section { padding: 50px 0; }
+    .section-title { font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 30px; color: #0f172a; position: relative; }
+    .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: linear-gradient(90deg, #f97316, #fbbf24); margin: 12px auto 0; border-radius: 2px; }
 
-/* Кнопка назад */
-.back-header { display: flex; align-items: center; gap: 15px; margin: 30px 0 20px; }
-.back-btn { font-size: 1.1rem; color: var(--text-dark); text-decoration: none; font-weight: bold; padding: 10px 20px; background: #fff; border-radius: 10px; border: 2px solid var(--border); transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-.back-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-5px); }
-.back-header h2 { font-size: 1.6rem; color: var(--text-dark); }
+    /* ===== ПРЕИМУЩЕСТВА (Блоки) ===== */
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .feature-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 4px solid #f97316; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(249, 115, 22, 0.1); border-color: #f97316; background: #fff; }
+    .feature-card h4 { color: #0f172a; margin-bottom: 10px; font-size: 1.1rem; }
+    .feature-card p { color: #64748b; font-size: 0.95rem; }
 
-/* Детальная страница */
-.prod-detail { display: flex; flex-direction: column; gap: 30px; background: #fff; padding: 30px; border-radius: 20px; border: 2px solid var(--border); margin-top: 20px; position: relative; overflow: hidden; }
-.prod-detail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), #fbbf24); }
-.detail-img-box { width: 100%; max-height: 350px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-.detail-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-.detail-info h1 { font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; }
-.detail-price { font-size: 3rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; }
-.features-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; }
-.feature-item { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; color: #475569; font-weight: 500; }
-.feature-icon { width: 24px; height: 24px; color: #10b981; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #ecfdf5; border-radius: 50%; }
-.call-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s; border: none; cursor: pointer; width: 100%; animation: pulseBtn 2s infinite; }
-.call-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(249,115,22,0.4); animation: none; }
+    /* ===== КАРТА ===== */
+    .top-map { background: #fff; padding: 40px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .top-map .container { display: flex; flex-direction: column; gap: 20px; }
+    .map-text { text-align: center; }
+    .map-text h2 { font-size: 1.6rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
+    .map-text p { font-size: 1rem; color: #64748b; }
+    .map-container-large { width: 100%; height: 400px; border-radius: 16px; overflow: hidden; border: 2px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+    .map-container-large:hover { transform: scale(1.01); border-color: #f97316; box-shadow: 0 10px 30px rgba(249,115,22,0.15); }
+    .map-container-large iframe { width: 100%; height: 100%; border: none; }
 
-/* Футер */
-.footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 0; font-size: .9rem; margin-top: 50px; border-top: 3px solid var(--primary); }
-.mobile-call { display: flex; position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 700; z-index: 100; justify-content: center; transition: 0.2s; gap: 10px; align-items: center; }
-.mobile-call svg { width: 20px; height: 20px; }
+    /* ===== РЕМОНТ ===== */
+    .price-list { display: flex; flex-direction: column; gap: 15px; max-width: 900px; margin: 0 auto; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 20px 25px; border-radius: 12px; border-left: 5px solid #0f172a; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; }
+    .price-row:hover { transform: scale(1.03) translateY(-5px); border-left-color: #f97316; background: #fff; box-shadow: 0 15px 30px rgba(249, 115, 22, 0.15); z-index: 2; }
+    .price-name { font-size: 1rem; color: #475569; line-height: 1.4; padding-right: 15px; font-weight: 500; }
+    .price-name strong { color: #0f172a; font-weight: 800; }
+    .price-val { font-size: 1.3rem; font-weight: 900; color: #f97316; white-space: nowrap; text-align: right; transition: transform 0.3s; }
+    .price-row:hover .price-val { transform: scale(1.1); }
+    .price-val span { display: block; font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 2px; }
 
-@media(min-width:640px){
-    .header-content { flex-direction: row; justify-content: space-between; }
-    .grid { grid-template-columns: repeat(3,1fr); }
-    .mobile-call { display: none; }
-    body { padding-bottom: 0; }
-    .prod-detail { flex-direction: row; align-items: flex-start; }
-    .detail-img-box { width: 50%; }
-    .detail-info { flex: 1; }
-    .filters select { flex: none; width: 200px; }
-}
-@media(min-width:1024px){ .grid { grid-template-columns: repeat(4,1fr); } }
-</style>
+    /* ===== ЧАСТЫЕ ВОПРОСЫ (FAQ) ===== */
+    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+    .faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
+    .faq-item[open] { border-color: #f97316; box-shadow: 0 5px 15px rgba(249,115,22,0.1); }
+    .faq-item summary { padding: 20px; font-weight: 700; font-size: 1.1rem; color: #0f172a; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; font-size: 1.5rem; color: #f97316; transition: transform 0.3s ease; line-height: 1; }
+    .faq-item[open] summary::after { content: '−'; transform: rotate(180deg); }
+    .faq-content { padding: 0 20px 20px; color: #475569; font-size: 1rem; line-height: 1.6; border-top: 1px solid #f1f5f9; margin-top: 5px; padding-top: 15px; }
+
+    /* ===== КОНТАКТЫ ===== */
+    .contact-section { background: #0f172a; color: #fff; padding: 60px 0; position: relative; overflow: hidden; }
+    .contact-section::before { content: ''; position: absolute; width: 300px; height: 300px; background: rgba(249, 115, 22, 0.1); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: blur(80px); pointer-events: none; }
+    .contact-section .container { position: relative; z-index: 1; }
+    .contact-section h3 { font-size: 2rem; margin-bottom: 40px; color: #fff; font-weight: 800; text-align: center; }
+    .contact-grid-new { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 900px; margin: 0 auto; }
+    .contact-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px 20px; text-align: center; transition: all 0.4s ease; backdrop-filter: blur(5px); }
+    .contact-card:hover { background: rgba(255, 255, 255, 0.1); border-color: #f97316; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(249, 115, 22, 0.2); }
+    .contact-card h4 { font-size: 1rem; color: #94a3b8; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-card a { color: #f97316; text-decoration: none; font-weight: 800; font-size: 1.4rem; transition: color 0.3s; display: inline-block; }
+    .contact-card a:hover { color: #ea580c; }
+    .contact-card p { font-size: 1.1rem; color: #e2e8f0; font-weight: 500; }
+
+    /* ===== ФУТЕР ===== */
+    .footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 0; font-size: 0.9rem; border-top: 1px solid #1e293b; }
+    .footer .requisites { margin-top: 8px; font-size: 0.8rem; color: #64748b; }
+
+    /* ===== ДВЕ КНОПКИ СНИЗУ НА МОБИЛЬНОМ ===== */
+    .mobile-bottom-bar { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #0f172a; padding: 10px; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); z-index: 1000; gap: 10px; }
+    .mobile-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 10px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 0.95rem; color: #fff; text-align: center; transition: transform 0.2s; }
+    .mobile-btn:active { transform: scale(0.95); }
+    .mobile-btn svg { width: 20px; height: 20px; }
+    .btn-rent { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .btn-repair { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (min-width: 640px) {
+      .header-content { flex-direction: row; justify-content: space-between; }
+      .hero { padding: 40px 0 50px; }
+      .hero h1 { font-size: 2.8rem; }
+      .features-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid-new { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .mobile-bottom-bar { display: none; }
+      body { padding-bottom: 0; }
+      .price-row { padding: 25px 30px; }
+    }
+    @media (max-width: 639px) {
+      .price-row { flex-direction: column; align-items: flex-start; gap: 15px; }
+      .price-val { align-self: flex-end; text-align: right; }
+      .mobile-bottom-bar { display: flex; }
+    }
+    @media (min-width: 1024px) {
+      .hero h1 { font-size: 3.2rem; }
+      .section { padding: 70px 0; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="container header-content">
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="20" fill="#f97316"/>
-        <path d="M35 70L45 60M60 40L70 30M52 52C56 56 60 56 64 52C68 48 68 44 64 40L52 52Z" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-      <div class="logo-text">Аренда и Ремонт<br><span>Инструмента</span></div>
-    </a>
-    <div class="nav-menu">
-      <a href="index.html">Главная</a>
-      <a href="catalog.html" class="active">Каталог</a>
-      <a href="index.html#contact">Контакты</a>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  <!-- ЭКРАН 1: КАТЕГОРИИ -->
-  <div id="view-cats" class="page active">
-    <div class="title"><h1>Каталог инструмента</h1><p>Выберите нужную категорию</p></div>
-    
-    <div class="controls">
-      <input type="text" id="search-cat" class="search-box" placeholder="🔍 Поиск категории..." oninput="renderCats()">
-      <div class="filters">
-        <select id="sort-cat" onchange="renderCats()">
-          <option value="alpha-asc">По алфавиту (А-Я)</option>
-          <option value="alpha-desc">По алфавиту (Я-А)</option>
-          <option value="price-asc">По цене (сначала дешевле)</option>
-          <option value="price-desc">По цене (сначала дороже)</option>
-        </select>
-      </div>
-      <div class="alphabet" id="alphabet-filters"></div>
-    </div>
-    <div class="grid" id="cats-grid"></div>
-  </div>
-
-  <!-- ЭКРАН 2: ТОВАРЫ -->
-  <div id="view-cat" class="page">
-    <div class="back-header">
-      <a href="#" class="back-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Назад
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="20" fill="#f97316"/>
+          <path d="M35 70L45 60M60 40L70 30M52 52C56 56 60 56 64 52C68 48 68 44 64 40L52 52Z" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="logo-text">Аренда и Ремонт<br><span>Инструмента</span></div>
       </a>
-      <h2 id="cat-title"></h2>
-    </div>
-    <div class="controls">
-      <input type="text" id="search-item" class="search-box" placeholder="🔍 Поиск инструмента..." oninput="renderItems(currentCat)">
-      <div class="filters">
-        <select id="sort-item" onchange="renderItems(currentCat)">
-          <option value="alpha-asc">По алфавиту (А-Я)</option>
-          <option value="alpha-desc">По алфавиту (Я-А)</option>
-          <option value="price-asc">По цене (сначала дешевле)</option>
-          <option value="price-desc">По цене (сначала дороже)</option>
-        </select>
+      <div class="nav-menu">
+        <a href="catalog.html">Каталог</a>
+        <a href="#repair">Ремонт</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#contact">Контакты</a>
       </div>
     </div>
-    <div class="grid" id="items-grid"></div>
-  </div>
+  </header>
 
-  <!-- ЭКРАН 3: ТОВАР -->
-  <div id="view-prod" class="page">
-    <div class="back-header">
-      <a href="#" class="back-btn" id="back-to-cat-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Назад в категорию
-      </a>
-    </div>
-    <div class="prod-detail">
-      <div class="detail-img-box" id="p-img"></div>
-      <div class="detail-info">
-        <h1 id="p-title"></h1>
-        <div class="detail-price" id="p-price"></div>
-        <div class="features-list">
-          <div class="feature-item"><div class="feature-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>Отличное состояние</div>
-          <div class="feature-item"><div class="feature-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>Проверка при выдаче</div>
-          <div class="feature-item"><div class="feature-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>Гарантия качества</div>
-        </div>
-        <a href="tel:+79022977999" class="call-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          Позвонить: 8 (902) 297-79-99
-        </a>
+  <!-- ГЛАВНЫЙ ЭКРАН -->
+  <section class="hero">
+    <div class="container">
+      <!-- Ключик -->
+      <div class="hero-icon animate-up delay-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
       </div>
-    </div>
-  </div>
-</div>
 
-<footer class="footer"><div class="container">© 2025 ООО «ТСА-СТРОЙ»</div></footer>
-
-<script>
-const DB = {
-  'udliniteli': { t: 'Удлинители', items: [
-    {id:'ud1', t:'Удлинитель 30м', p:'150 ₽', img:'https://avatars.mds.yandex.net/get-mpic/4828674/img_id335441104514677705.jpeg/orig'},
-    {id:'ud2', t:'Удлинитель Шнек 400мм', p:'100 ₽', img:''}
-  ]},
-  'perforatory': { t: 'Перфораторы и отбойные молотки', items: [
-    {id:'p1', t:'Перфоратор Interskol', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/12414275/1000x1000/156665609.jpg'},
-    {id:'p2', t:'Перфоратор Вихрь SSD MAX', p:'1000 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/7335919/2400x1600/90057374.jpg'}
-  ]},
-  'ushm': { t: 'УШМ (Болгарки)', items: [
-    {id:'u1', t:'УШМ 125', p:'500 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16437846/2a0000019d8c71086f0852c8ee4eb1b81cc5/orig'},
-    {id:'u2', t:'УШМ 150', p:'600 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/461/356/210/221/048/100065700838b0.png'}
-  ]},
-  'shneki': { t: 'Шнеки и Буры', items: [
-    {id:'sh1', t:'Шнек 100х800', p:'450 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063280/2400x1600/132198554.jpg'},
-    {id:'sh2', t:'Шнек 150х800', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063299/2400x1600/126369194.jpg'}
-  ]},
-  'svarka': { t: 'Сварка', items: [
-    {id:'s1', t:'Сварочный п/а Zitrek 180', p:'1000 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-74/744/066/411/181/639/600013219354b6.jpg'},
-    {id:'s2', t:'Сварочный аппарат Ресанта ПРО 250', p:'900 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/svarochnoe-oborudovanie/136180/1000x1000/201073353.jpg'}
-  ]},
-  'benzopily': { t: 'Бензопилы и Бензорезы', items: [
-    {id:'bp1', t:'Бензопила hanskonner', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/5365919/img_id1884980393196573580.jpeg/orig'},
-    {id:'bp2', t:'Бензорез', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/1603927/img_id6958938792989727374.jpeg/orig'}
-  ]},
-  'betonomeshalki': { t: 'Бетономешалки', items: [
-    {id:'b1', t:'Бетономешалка 180', p:'900 ₽', img:'https://cdn.etm.ru/ipro/2149/21183041.jpg'}
-  ]},
-  'dreli': { t: 'Дрели и Шуруповерты', items: [
-    {id:'d1', t:'Дрель ГРАД М', p:'500 ₽', img:'https://instrumentmarket.ru/upload/iblock/a16/2wc37flavb83k1hwzt7lp63wved69h4g/drel_s_udarom_grad_m_du_850_850vt_zvp_13mm_2_800ob_m_.jpg'},
-    {id:'d2', t:'Шуруповерт Makita Мал.', p:'500 ₽', img:'https://img.positronica.ru/items/2010807_v01_b.webp'}
-  ]},
-  'pily': { t: 'Пилы и Лобзики', items: [
-    {id:'pi1', t:'Циркулярная пила', p:'600 ₽', img:'https://cdn.kuvalda.ru/data/file_resize/product/8a/7c/b6/landing-pila-cirkuljarnaja-setevaja-bosch-gks-190-1.jpg'},
-    {id:'pi2', t:'Пила Эл.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/12621455/2a000001903ac959867dfcbc90cc82b495ae/orig'}
-  ]},
-  'shlifmashiny': { t: 'Шлифмашинки и Фрезеры', items: [
-    {id:'shl1', t:'Шлейфмаш. Эксцентр. Faevorite', p:'600 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/shlifovalnye-mashinki-shlifmashinki/19628370/2400x1600/206625482.jpg'},
-    {id:'shl2', t:'Шлейфмаш. Эксцентр. DEKO', p:'600 ₽', img:'https://cdn.poryadok.ru/upload/iblock/681/6816c1d08d33d62a334c4f78c31b0a51.jpg'}
-  ]},
-  'kompressory': { t: 'Компрессоры', items: [
-    {id:'k1', t:'Компрессор 50л 86ар. 500л/мин', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e547a39444b3af3823b1975afcf385e8f92a51c0-9871231-images-thumbs&n=13'},
-    {id:'k2', t:'Компрессор Мал', p:'800 ₽', img:'https://avatars.mds.yandex.net/i?id=b7d77ff298657c4c0091dfe78b90c56905be254d-4418430-images-thumbs&n=13'}
-  ]},
-  'pylesosy': { t: 'Пылесосы', items: [
-    {id:'py1', t:'Пылесос Sturm 1700Вт. 30л.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=9d17e28e6eae89bcc5e4726abbdc5ef40736ecba-12634740-images-thumbs&n=13'},
-    {id:'py2', t:'Пылесос Fin Polar', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=72bea0734fc7392b09f1931a9e1f102b68187c55-16513077-images-thumbs&n=13'}
-  ]},
-  'lestnicy': { t: 'Лестницы и Стремянки', items: [
-    {id:'l1', t:'Стремянка 6 ст.', p:'300 ₽', img:'https://avatars.mds.yandex.net/i?id=cd59cfbb20b2f1df88971c507317c0e08e0e9994-10500862-images-thumbs&n=13'},
-    {id:'l2', t:'Стремянка 7 ст.', p:'400 ₽', img:'https://avatars.mds.yandex.net/i?id=fcc0ebf9196c09ef5541579342fe68afd366d630-5231899-images-thumbs&n=13'}
-  ]},
-  'motobury': { t: 'Мотобуры (Бензобуры)', items: [
-    {id:'r18', t:'Мотобур Huter 3,2лс 2400вт', p:'900 ₽', img:'https://cdn.pandashop.md/i/?i=/i/products/260/2604563.jpg&w=200&h=200'}
-  ]},
-  'vozduhoduvki': { t: 'Воздуходувки', items: [
-    {id:'r4', t:'Воздуходувка', p:'1200 ₽', img:'https://avatars.mds.yandex.net/i?id=bc818dc7ccc8b41de38e926f49e8e780_l-4034519-images-thumbs&n=13'}
-  ] },
-  'generatory': { t: 'Генераторы', items: [
-    {id:'r5', t:'Генератор Fubag BS 5500', p:'1300 ₽', img:'https://avatars.mds.yandex.net/i?id=a44d5f912a6bb1dca61416a68d8e1d4ca26a1d8b-4904627-images-thumbs&n=13'}
-  ] },
-  'gaykovery': { t: 'Гайковерты', items: [
-    {id:'r6', t:'Гайковерт АКБ DeWALT', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=35e8102933c7f6ea75969ada680fcafe8168c14e-5681290-images-thumbs&n=13'}
-  ] },
-  'gorelki': { t: 'Газовые горелки', items: [
-    {id:'r7', t:'Газовая горелка', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=1eff8a929d0c8ab88378ebf9a92f4f504ec56fe8-5710342-images-thumbs&n=13'}
-  ] },
-  'detektory': { t: 'Детекторы проводки', items: [
-    {id:'r8', t:'Детектор проводки', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=6dee071727f7f963c4d9e6fcc21cb36d38736093-5635981-images-thumbs&n=13'}
-  ] },
-  'domkraty': { t: 'Домкраты', items: [
-    {id:'r9', t:'Домкрат 1/10т', p:'400 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16413949/2a0000019bfd9e0aafed7b8f58bff422c63a/orig'}
-  ] },
-  'nasosy': { t: 'Насосы', items: [
-    {id:'r10', t:'Дренальный насос 900', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=669246afdc496429e137379e279a9dd29d0307ea-4809955-images-thumbs&n=13'}
-  ] },
-  'klepalniki': { t: 'Клепальники', items: [
-    {id:'r11', t:'Клепальник', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=5d6fb9aba729c5c8bd3b52c1e332508c663a8ab5-5451798-images-thumbs&n=13'}
-  ] },
-  'kuvaldy': { t: 'Кувалды', items: [
-    {id:'r12', t:'Кувалда', p:'250 ₽', img:'https://avatars.mds.yandex.net/i?id=c997862c4021c62ecda3bc066cac819ec43ba57c-5232446-images-thumbs&n=13'}
-  ] },
-  'lomy': { t: 'Ломы', items: [
-    {id:'r13', t:'Лом ср.', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=2db47fe4ea13b8286c3216929a3fd720b24a659be43b4a95-12388455-images-thumbs&n=13'},
-    {id:'r14', t:'Лом бол.', p:'250 ₽', img:'https://avatars.mds.yandex.net/i?id=2db47fe4ea13b8286c3216929a3fd720b24a659be43b4a95-12388455-images-thumbs&n=13'}
-  ]},
-  'lebedki': { t: 'Лебедки', items: [
-    {id:'r15', t:'Лебедка ЭЛ-125/250', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=1b3de26fe1ac1b9d409f458fb24b6b596a786d98-5247044-images-thumbs&n=13'},
-    {id:'r16', t:'Лебедка Ручная', p:'300 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-j/c1000/7088612275.jpg'}
-  ]},
-  'izmeritelnye': { t: 'Измерительные приборы', items: [
-    {id:'r17', t:'Лазерный уровень Makita', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=a7c93e9c08cddc185d9403507fb2869b4a3503ba-4250988-images-thumbs&n=13'}
-  ]},
-  'moyki': { t: 'Мойки высокого давления', items: [
-    {id:'r19', t:'Мойка высокого давления', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=2e92a47391cffd8bf96b98526c32e159c0387608-8331156-images-thumbs&n=13'}
-  ] },
-  'miksery': { t: 'Миксеры', items: [
-    {id:'r20', t:'Миксер', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=e95a9730a7a7544bbd4c5a53e4491b3fa4b43652-12658945-images-thumbs&n=13'}
-  ] },
-  'opresovschiki': { t: 'Опресовщики', items: [
-    {id:'r21', t:'Опресовщик 0-63 бара', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=f6898e37d124949eef94415e58711d74d6d7ea74-5234975-images-thumbs&n=13'}
-  ] },
-  'plitkorezy': { t: 'Плиткорезы', items: [
-    {id:'r22', t:'Плиткорез Эл. FSC 180', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=c420dfcc19ea3e1310d8d70ee73c949b266f9416-5677241-images-thumbs&n=13'}
-  ]},
-  'prozhjektory': { t: 'Прожекторы', items: [
-    {id:'r24', t:'Прожектор', p:'50 ₽', img:'https://avatars.mds.yandex.net/i?id=565e00a5df31d2ffef538378034c63d77900aafd-5603715-images-thumbs&n=13'}
-  ] },
-  'rezaki': { t: 'Резаки', items: [
-    {id:'r25', t:'Резак+Баллоны', p:'2500 ₽', img:'https://avatars.mds.yandex.net/i?id=300c2445beb94f983382e9443f763b250ac708e9-12585911-images-thumbs&n=13'}
-  ]},
-  'renovatory': { t: 'Реноваторы', items: [
-    {id:'r27', t:'Реноватор DEKO 600ВТ', p:'600 ₽', img:'https://avatars.mds.yandex.net/get-mpic/6453326/img_id5624039835767580682.jpeg/orig'}
-  ] },
-  'steplery': { t: 'Степлеры', items: [
-    {id:'r28', t:'Степлер строительный', p:'150 ₽', img:'https://avatars.mds.yandex.net/i?id=8c72ffc7c14884d110d59ad6136cee69c434a8d9-5221376-images-thumbs&n=13'}
-  ] },
-  'teplopushki': { t: 'Тепловые пушки', items: [
-    {id:'r30', t:'Теплопушка Ballu 17К', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=65370cb47b60783c30334a80dba80ac65d799b74-11867893-images-thumbs&n=13'}
-  ] },
-  'tali': { t: 'Тали', items: [
-    {id:'r31', t:'Таль Рычажная 3т', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=4203066ec9f61969c6940aba0a1f51c5260d92bc-5873534-images-thumbs&n=13'}
-  ] },
-  'trimmery': { t: 'Триммеры', items: [
-    {id:'r32', t:'Триммер Парма', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e2c1054de25e879981afe10e1a32a89345386494-4743742-images-thumbs&n=13'}
-  ] },
-  'feny': { t: 'Фены технические', items: [
-    {id:'r33', t:'Фен патриот', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=6a715744934c93675e7563440062c7b0eae05bcf-12166422-images-thumbs&n=13'}
-  ] },
-  'osnastka': { t: 'Оснастка и насадки', items: [
-    {id:'r34', t:'Насадка на УШМ (Антипыль)', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=b1dc80b104b535d9cab95cd2149004941fbd0aa2-4903222-images-thumbs&n=13'}
-  ] },
-  'ballony': { t: 'Баллоны', items: [
-    {id:'r1', t:'Баллон Пропан', p:'900 ₽', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
-    {id:'r2', t:'Баллон Кислородный', p:'500 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-t/7286572541.jpg'}
-  ]},
-  'boltoresy': { t: 'Болторезы', items: [
-    {id:'r3', t:'Болторез ручной', p:'800 ₽', img:'https://avatars.mds.yandex.net/get-mpic/13750035/2a00000198c1aa14f9b5d090c3729ad306ee/orig'}
-  ]}
-};
-
-let currentCat = '';
-let filterLetter = '';
-
-function getMinPrice(cat) {
-  let min = Infinity;
-  cat.items.forEach(i => { let num = parseInt(i.p.replace(/\D/g,'')); if (num && num < min) min = num; });
-  return min === Infinity ? 0 : min;
-}
-
-function renderAlphabet() {
-  const letters = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ".split("");
-  let html = `<button onclick="setLetter('')" class="${filterLetter===''?'active':''}">Все</button>`;
-  letters.forEach(l => { html += `<button onclick="setLetter('${l}')" class="${filterLetter===l?'active':''}">${l}</button>`; });
-  document.getElementById('alphabet-filters').innerHTML = html;
-}
-
-function setLetter(l) { filterLetter = l; renderAlphabet(); renderCats(); }
-
-function renderCats() {
-  const search = document.getElementById('search-cat').value.toLowerCase();
-  const sort = document.getElementById('sort-cat').value;
-  
-  let items = Object.entries(DB).filter(([key, data]) => {
-    const matchSearch = data.t.toLowerCase().includes(search);
-    const matchLetter = filterLetter === '' || data.t.toUpperCase().startsWith(filterLetter);
-    return matchSearch && matchLetter;
-  });
-
-  items.sort((a, b) => {
-    if (sort === 'alpha-asc') return a[1].t.localeCompare(b[1].t);
-    if (sort === 'alpha-desc') return b[1].t.localeCompare(a[1].t);
-    if (sort === 'price-asc') return getMinPrice(a[1]) - getMinPrice(b[1]);
-    if (sort === 'price-desc') return getMinPrice(b[1]) - getMinPrice(a[1]);
-  });
-
-  let html = '';
-  items.forEach(([key, c], index) => {
-    let delay = (index % 15) * 0.05; 
-    
-    // Ищем первую картинку в категории
-    let coverImg = '';
-    for (let item of c.items) {
-      if (item.img) { coverImg = item.img; break; }
-    }
-    
-    // Формируем блок с картинкой или заглушкой
-    let imgHtml = coverImg 
-      ? `<div class="cat-image-box"><img src="${coverImg}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:1rem\\'>ФОТО</span>';"></div>`
-      : `<div class="cat-image-box no-photo">ФОТО</div>`;
-
-    html += `<a href="#${key}" class="cat-card stagger-item" style="animation-delay:${delay}s">
-      ${imgHtml}
-      <div class="cat-info">
-        <div class="cat-title">${c.t}</div>
-        <div class="cat-count">${c.items.length} шт.</div>
-      </div>
-    </a>`;
-  });
-  document.getElementById('cats-grid').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:20px">Ничего не найдено</p>';
-}
-
-function renderItems(catKey) {
-  const search = document.getElementById('search-item').value.toLowerCase();
-  const sort = document.getElementById('sort-item').value;
-  const cat = DB[catKey];
-  let items = cat.items.filter(item => item.t.toLowerCase().includes(search));
-
-  items.sort((a, b) => {
-    let pA = parseInt(a.p.replace(/\D/g,'')) || 0;
-    let pB = parseInt(b.p.replace(/\D/g,'')) || 0;
-    if (sort === 'alpha-asc') return a.t.localeCompare(b.t);
-    if (sort === 'alpha-desc') return b.t.localeCompare(a.t);
-    if (sort === 'price-asc') return pA - pB;
-    if (sort === 'price-desc') return pB - pA;
-  });
-
-  let html = '';
-  items.forEach((item, index) => {
-    let delay = (index % 15) * 0.05;
-    
-    // Блок с картинкой для товара
-    let imgHtml = item.img 
-      ? `<div class="prod-img-box"><img src="${item.img}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:0.9rem\\'>ФОТО</span>';"></div>`
-      : `<div class="prod-img-box no-photo">ФОТО</div>`;
-    
-    html += `<a href="#prod-${item.id}" class="prod-card stagger-item" style="animation-delay:${delay}s">
-      ${imgHtml}
-      <div class="prod-info">
-        <div class="prod-title">${item.t}</div>
-        <div class="prod-price">${item.p} / сутки</div>
-      </div>
-    </a>`;
-  });
-  document.getElementById('items-grid').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:20px">Ничего не найдено</p>';
-}
-
-function router() {
-  const hash = window.location.hash.replace('#', '');
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-  if (!hash) {
-    document.getElementById('view-cats').classList.add('active');
-    return;
-  }
-
-  if (hash.startsWith('prod-')) {
-    const prodId = hash.replace('prod-', '');
-    let item = null;
-    for (let key in DB) {
-      let found = DB[key].items.find(i => i.id === prodId);
-      if (found) { item = found; currentCat = key; break; }
-    }
-    if (item) {
-      document.getElementById('back-to-cat-btn').href = `#${currentCat}`;
-      document.getElementById('p-title').innerText = item.t;
-      document.getElementById('p-price').innerText = item.p + ' / сутки';
+      <h1 class="animate-up delay-2">Профессиональный <span>инструмент</span><br>в аренду и на ремонт</h1>
+      <p class="animate-up delay-3">Работаем для вас в Тольятти. Большой выбор инструмента, честные цены, быстрый ремонт.</p>
       
-      if (item.img) {
-        document.getElementById('p-img').innerHTML = `<img src="${item.img}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:1.5rem\\'>ФОТО</span>'">`;
-      } else {
-        document.getElementById('p-img').innerHTML = '<span style="color:#94a3b8;font-weight:bold;font-size:1.5rem">ФОТО</span>';
-      }
-      document.getElementById('view-prod').classList.add('active');
-    }
-  } else if (DB[hash]) {
-    currentCat = hash;
-    document.getElementById('cat-title').innerText = DB[hash].t;
-    document.getElementById('search-item').value = ''; 
-    renderItems(hash);
-    document.getElementById('view-cat').classList.add('active');
-  }
-}
+      <div class="animate-up delay-3">
+        <a href="catalog.html" class="btn-main">Смотреть каталог</a>
+      </div>
+      
+      <div class="hero-stats animate-up delay-4">
+        <div class="stat-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Широкий выбор
+        </div>
+        <div class="stat-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          Быстрое оформление
+        </div>
+        <div class="stat-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Проверенное качество
+        </div>
+      </div>
+    </div>
+  </section>
 
-renderAlphabet();
-renderCats();
-window.addEventListener('hashchange', router);
-window.addEventListener('load', () => { if (window.location.hash) router(); });
-</script>
+  <!-- ПРЕИМУЩЕСТВА -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title animate-up delay-1">Почему выгодно брать у нас</h2>
+      <div class="features-grid">
+        <div class="feature-card animate-up delay-2">
+          <h4>1. Проверенное оборудование</h4>
+          <p>Вся техника регулярно обслуживается и находится в рабочем состоянии. Makita, Zitrek, Husqvarna и другие бренды.</p>
+        </div>
+        <div class="feature-card animate-up delay-3">
+          <h4>2. Гибкие тарифы</h4>
+          <p>У нас есть цены на сутки и на неделю. При долгосрочной аренде предоставляем скидки.</p>
+        </div>
+        <div class="feature-card animate-up delay-4">
+          <h4>3. Официальный договор</h4>
+          <p>Работаем с юридическими лицами: предоставляем все закрывающие документы для отчетности.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КАРТА -->
+  <section class="top-map">
+    <div class="container">
+      <div class="map-text animate-up delay-1">
+        <h2>Мы находимся здесь</h2>
+        <p>г. Тольятти, Комсомольская улица, 159с1</p>
+      </div>
+      <div class="map-container-large animate-up delay-2">
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=49.431965%2C53.516570&z=17&pt=49.431965,53.516570,pm2rdm" allowfullscreen="true"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- БЛОК РЕМОНТА -->
+  <section class="section" style="background-color: #fff;" id="repair">
+    <div class="container">
+      <h2 class="section-title animate-up delay-1">Ремонт инструмента</h2>
+      
+      <p class="animate-up delay-2" style="text-align: center; margin-bottom: 40px; color: #64748b; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 1.1rem;">
+        Мы не продаем инструмент. Мы занимаемся его <strong>профессиональным ремонтом</strong>. Указанные ниже цены — это стоимость <strong>диагностики</strong> (выявления неисправности), а не самого ремонта.
+      </p>
+
+      <div class="price-list">
+        <div class="price-row animate-up delay-3">
+          <div class="price-name"><strong>Группа 1</strong> — Дрели, триммеры, краскораспылители, термовоздуходувки</div>
+          <div class="price-val"><span>Диагностика</span>от 650 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-3">
+          <div class="price-name"><strong>Группа 2</strong> — Циркулярные пилы, рубанки, лобзики, УШМ до 125, шлифмашины</div>
+          <div class="price-val"><span>Диагностика</span>от 750 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-3">
+          <div class="price-name"><strong>Группа 3</strong> — Перфораторы SDS+, гайковерты, газонокосилки, УШМ от 125, пылесосы</div>
+          <div class="price-val"><span>Диагностика</span>от 850 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-4">
+          <div class="price-name"><strong>Группа 4</strong> — Компрессоры бытовые, нагреватели, реймусы, торцовочные пилы</div>
+          <div class="price-val"><span>Диагностика</span>от 900 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-4">
+          <div class="price-name"><strong>Группа 5</strong> — Сварочные аппараты, бензоинструмент, электростанции до 1.5 кВт, мойки высокого давления</div>
+          <div class="price-val"><span>Диагностика</span>от 1000 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-4">
+          <div class="price-name"><strong>Группа 6</strong> — Отбойные молотки, перфораторы SDS Max</div>
+          <div class="price-val"><span>Диагностика</span>от 900 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-5">
+          <div class="price-name"><strong>Группа 7</strong> — Культиваторы, компрессоры проф., электростанции 1.5-6 кВт, бензорезы, бетоноломы</div>
+          <div class="price-val"><span>Диагностика</span>от 1400 ₽</div>
+        </div>
+        <div class="price-row animate-up delay-5">
+          <div class="price-name"><strong>Группа 8</strong> — Дизельные станции, виброплиты, мозаично-шлифовальные машины, станки, промышленные сварочные аппараты</div>
+          <div class="price-val"><span>Диагностика</span>от 1500 ₽</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЧАСТЫЕ ВОПРОСЫ (FAQ) -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2 class="section-title animate-up delay-1">Частые вопросы</h2>
+      
+      <div class="faq-list animate-up delay-2">
+        
+        <details class="faq-item">
+          <summary>Нужен ли залог при аренде инструмента?</summary>
+          <div class="faq-content">
+            Если вы берете инструмент без оформления расписки или поручительства, то потребуется залог. Его размер зависит от стоимости оборудования. Залог возвращается в полном объеме после сдачи инструмента в исправном состоянии.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Есть ли доставка инструмента?</summary>
+          <div class="faq-content">
+            Мы находимся по адресу: г. Тольятти, Комсомольская улица, 159с1. Вы можете забрать инструмент самостоятельно. По вопросам доставки крупногабаритного оборудования свяжитесь с нами по телефону — мы обсудим индивидуальные условия.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Что нужно для заключения договора аренды?</summary>
+          <div class="faq-content">
+            Для физических лиц достаточно паспорта. Для юридических лиц потребуются реквизиты компании. Мы оформляем официальный договор аренды, в котором прописаны сроки, стоимость и ответственность сторон.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Сколько времени занимает ремонт?</summary>
+          <div class="faq-content">
+            Срок ремонта зависит от сложности поломки и наличия запчастей. Первичная диагностика обычно занимает 1-2 дня. После выявления неисправности мы озвучиваем точные сроки и стоимость ремонта.
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <h3 class="animate-up delay-1">Свяжитесь с нами</h3>
+      
+      <div class="contact-grid-new animate-up delay-2">
+        
+        <div class="contact-card">
+          <h4>Аренда инструмента</h4>
+          <a href="tel:+79022977999">8 (902) 297-79-99</a>
+        </div>
+        
+        <div class="contact-card">
+          <h4>Сервисный центр по ремонту</h4>
+          <a href="tel:+79677277999">8 (967) 727-79-99</a>
+        </div>
+
+        <div class="contact-card">
+          <h4>Электронная почта</h4>
+          <a href="mailto:tsa-stroi63@mail.ru">tsa-stroi63@mail.ru</a>
+        </div>
+
+        <div class="contact-card">
+          <h4>Наш адрес</h4>
+          <p>г. Тольятти,<br>Комсомольская улица, 159с1</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© 2025 ООО «ТСА-СТРОЙ»</div>
+      <div class="requisites">ИНН 6320082846 · ОГРН 1246300024739</div>
+    </div>
+  </footer>
+
+  <!-- ДВЕ КНОПКИ ВНИЗУ (Только для мобильных) -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+79022977999" class="mobile-btn btn-rent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Аренда
+    </a>
+    <a href="tel:+79677277999" class="mobile-btn btn-repair">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Ремонт
+    </a>
+  </div>
+
 </body>
 </html>
