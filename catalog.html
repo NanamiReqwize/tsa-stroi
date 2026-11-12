@@ -352,7 +352,7 @@ const DB = {
     {id:'shv1', t:'Шоврезчик Husqvarna', p:'', type:'Бензиновый', img:'https://avatars.mds.yandex.net/i?id=259e1a65fb345225cf814194fb0a15b03bd8a219-8449089-images-thumbs&n=13'}
   ]},
   'shtraborezy': { t: 'Штраборезы', items: [
-    {id:'sht1', t:'Штроборез ЗУБР 1400', p:'', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=d421a5636a6e1bab3546d9c506fc63d4947b3386-5277049-images-thumbs&n=13'}
+    {id:'sht1', t:'Штроборез ЗУБР 1400', p:'', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=7aa692114eb9b1f7e4133718e25efdd150700bb1-5285345-images-thumbs&n=13'}
   ]},
   'kompressory': { t: 'Компрессоры', items: [
     {id:'k1', t:'Компрессор 50л 86ар. 500л/мин', p:'1000 ₽', type:'Электрический', img:'https://cdn.bigam.ru/iblock/4bb/4bb5bbeb8c88e1aa5456c88468f6831b/1662113_6.jpg'},
@@ -433,7 +433,7 @@ const DB = {
     {id:'r32', t:'Триммер Парма', p:'1000 ₽', type:'Бензиновый', img:'https://avatars.mds.yandex.net/i?id=e2c1054de25e879981afe10e1a32a89345386494-4743742-images-thumbs&n=13'}
   ] },
   'feny': { t: 'Фены технические', items: [
-    {id:'r33', t:'Фен патриот', p:'600 ₽', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=6a715744934c93675e7563440062c7b0eae05bcf-12166422-images-thumbs&n=13'}
+    {id:'r33', t:'Фен строительный', p:'600 ₽', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=6a715744934c93675e7563440062c7b0eae05bcf-12166422-images-thumbs&n=13'}
   ] },
   'osnastka': { t: 'Оснастка и насадки', items: [
     {id:'r34', t:'Насадка на УШМ (Антипыль)', p:'200 ₽', img:'https://avatars.mds.yandex.net/i?id=b1dc80b104b535d9cab95cd2149004941fbd0aa2-4903222-images-thumbs&n=13'}
@@ -454,7 +454,6 @@ function renderCats() {
   let html = '';
 
   if (!search) {
-    // Показываем категории
     let cats = Object.entries(DB);
     cats.sort((a, b) => a[1].t.localeCompare(b[1].t));
 
@@ -477,7 +476,6 @@ function renderCats() {
       </a>`;
     });
   } else {
-    // Показываем товары
     let prods = [];
     for (let key in DB) {
       let cat = DB[key];
