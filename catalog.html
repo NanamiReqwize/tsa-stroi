@@ -265,6 +265,13 @@ const DB = {
     {id:'cep', t:'Цепь бензопил', img:'https://avatars.mds.yandex.net/i?id=d1185be7f234d32b739e136129b85e579687845b-5235709-images-thumbs&n=13'},
     {id:'sverla', t:'Сверла от 0,5 до 10', img:'https://avatars.mds.yandex.net/i?id=924257e43e4e8034cc84afe36ecfdde54ca31157-8972573-images-thumbs&n=13'}
   ] },
+  'boltoresy': { t: 'Болторезы', items: [
+    {id:'r3', t:'Болторез ручной', img:'https://avatars.mds.yandex.net/get-mpic/13750035/2a00000198c1aa14f9b5d090c3729ad306ee/orig'}
+  ]},
+  'ballony': { t: 'Баллоны', items: [
+    {id:'r1', t:'Баллон Пропан', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
+    {id:'r2', t:'Баллон Кислородный', img:'https://60.img.avito.st/image/1/1.NEiCk7a1mKH4Olap5vMVLukymqE8OFap-Dqaow.wQPfB2gZ-bvr40bpwIPyTW40PuG487uS4PC7AJow6tM'}
+  ]},
   'perforatory': { t: 'Перфораторы', items: [
     {id:'p1', t:'Перфоратор Interskol', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=f31677e1187a459a80136e49a6ddcff942386bbc-9042901-images-thumbs&n=13'},
     {id:'p2', t:'Перфоратор Вихрь ССД Макс', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=d501421d78f1252281e1d2d3002dde928e3c1282-5449619-images-thumbs&n=13'},
@@ -433,13 +440,6 @@ const DB = {
   'osnastka': { t: 'Оснастка и насадки', items: [
     {id:'r34', t:'Насадка на УШМ (Антипыль)', img:'https://avatars.mds.yandex.net/i?id=b1dc80b104b535d9cab95cd2149004941fbd0aa2-4903222-images-thumbs&n=13'}
   ] },
-  'boltoresy': { t: 'Болторезы', items: [
-    {id:'r3', t:'Болторез ручной', img:'https://avatars.mds.yandex.net/get-mpic/13750035/2a00000198c1aa14f9b5d090c3729ad306ee/orig'}
-  ]},
-  'ballony': { t: 'Баллоны', items: [
-    {id:'r1', t:'Баллон Пропан', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
-    {id:'r2', t:'Баллон Кислородный', img:'https://60.img.avito.st/image/1/1.NEiCk7a1mKH4Olap5vMVLukymqE8OFap-Dqaow.wQPfB2gZ-bvr40bpwIPyTW40PuG487uS4PC7AJow6tM'}
-  ]},
   'bury': { t: 'Буры и коронки', items: [
     {id:'bur2', t:'Бур 16, 20, 22, 24, 25 SSD', img:'https://avatars.mds.yandex.net/i?id=118811b9e10209cbaaa2ade00d0bd0ff780df4fd-16451760-images-thumbs&n=13'},
     {id:'bur3', t:'Бур 18 SSD MAX', img:'https://avatars.mds.yandex.net/i?id=906a351a54d63fcc0dbd76c451b374538faeb684-5233025-images-thumbs&n=13'},
@@ -460,25 +460,32 @@ function renderCats() {
   if (!search) {
     let cats = Object.entries(DB);
     
-    cats.sort((a, b) => {
-        // Кастомный порядок для конкретных категорий
-        const customOrder = {
-            'rashodniki': 1,
-            'boltoresy': 100,
-            'ballony': 101,
-            'bury': 102
-        };
-        
-        let orderA = customOrder[a[0]] || 0;
-        let orderB = customOrder[b[0]] || 0;
-        
-        if (orderA !== orderB) return orderA - orderB;
-        
-        // Остальные по алфавиту
-        return a[1].t.localeCompare(b[1].t);
-    });
+    // 1. Находим специальные категории
+    const rashodniki = cats.find(c => c[0] === 'rashodniki');
+    const boltoresy = cats.find(c => c[0] === 'boltoresy');
+    const ballony = cats.find(c => c[0] === 'ballony');
+    const bury = cats.find(c => c[0] === 'bury');
+    
+    // 2. Отделяем остальные и сортируем по алфавиту
+    let others = cats.filter(c => !['rashodniki', 'boltoresy', 'ballony', 'bury'].includes(c[0]));
+    others.sort((a, b) => a[1].t.localeCompare(b[1].t));
+    
+    // 3. Собираем в нужном порядке
+    let sortedCats = [];
+    
+    if (rashodniki) sortedCats.push(rashodniki); // 1-е место
+    
+    if (others.length > 0) sortedCats.push(others.shift()); // 2-е место (Бензорезы)
+    if (others.length > 0) sortedCats.push(others.shift()); // 3-е место (Бетономешалки)
+    
+    if (boltoresy) sortedCats.push(boltoresy); // 4-е место
+    if (ballony) sortedCats.push(ballony);     // 5-е место
+    
+    sortedCats.push(...others); // Все остальные (по алфавиту)
+    
+    if (bury) sortedCats.push(bury); // Самый последний
 
-    cats.forEach(([key, c], index) => {
+    sortedCats.forEach(([key, c], index) => {
       let delay = (index % 15) * 0.05; 
       let coverImg = '';
       for (let item of c.items) {
