@@ -261,9 +261,22 @@ body {
 
 <script>
 const DB = {
-  'udliniteli': { t: 'Удлинители', items: [
-    {id:'ud1', t:'Удлинитель 30м', p:'150 ₽', img:'https://avatars.mds.yandex.net/i?id=c6e7172b7fd9222ccbfb2ac38de4c7c1958c8428-5884527-images-thumbs&n=13'}
-  ]},
+  'rashodniki': { t: 'Расходники', items: [
+    {id:'krug1', t:'Круг отрезной 125х1,2', p:'', img:'https://avatars.mds.yandex.net/i?id=440f01cda446cd381bfb118fd9aabf3e4439a5ef-5233330-images-thumbs&n=13'},
+    {id:'krug2', t:'Круг отрезной 125х1,6', p:'', img:'https://avatars.mds.yandex.net/get-mpic/5255532/img_id1394540051430805836.jpeg/9hq'},
+    {id:'krug3', t:'Круг отрезной 150х1,2', p:'', img:'https://avatars.mds.yandex.net/get-mpic/17722047/2a0000019f6babf3f7de55c3fbe47d1f8e56/orig'},
+    {id:'krug4', t:'Круг отрезной 230х1,6', p:'', img:'https://avatars.mds.yandex.net/i?id=bccca5436cc0f3b9bce15b03e6bb2f5242147e74-10256374-images-thumbs&n=13'},
+    {id:'krug5', t:'Круг зачистной 125х6', p:'', img:'https://avatars.mds.yandex.net/i?id=423c8f8e615035329d4adb2b28f30ccdec4b3f29-12885283-images-thumbs&n=13'},
+    {id:'krug6', t:'Круг зачистной 150х6', p:'', img:'https://avatars.mds.yandex.net/i?id=23ddddc48fe0f9d3952fe18e3e626385ac2bef6d-5620050-images-thumbs&n=13'},
+    {id:'krug7', t:'Круг шлифовальный 125', p:'', img:'https://avatars.mds.yandex.net/i?id=a894ebdd3a81b5da8815c42a003c2cfc7d334ad4-7013926-images-thumbs&n=13'},
+    {id:'krug8', t:'Круг шлифовальный 215', p:'', img:'https://avatars.mds.yandex.net/i?id=2122476965ca83a1a9e8736c35cdc4ceffcbb742-5305607-images-thumbs&n=13'},
+    {id:'krug9', t:'Круг полировальный', p:'', img:'https://avatars.mds.yandex.net/i?id=004fb95cfaf9cca05d4871e27d645775c719bed3-5317467-images-thumbs&n=13'},
+    {id:'meshok', t:'Мешок строительный', p:'', img:'https://avatars.mds.yandex.net/i?id=d9d2a9e601dd48f4a903cffc050a9615c19672d7-5086971-images-thumbs&n=13'},
+    {id:'bury_4_15', t:'Буры от 4 до 15', p:'', img:'https://avatars.mds.yandex.net/i?id=c2a0f7560779ded1c20a557c31829927f113d597-4034470-images-thumbs&n=13'},
+    {id:'sverla', t:'Сверла от 0,5 до 10', p:'', img:'https://avatars.mds.yandex.net/i?id=924257e43e4e8034cc84afe36ecfdde54ca31157-8972573-images-thumbs&n=13'},
+    {id:'perchatki', t:'Перчатки строительные', p:'', img:'https://avatars.mds.yandex.net/i?id=b631ffc366228d4e05f7789b03e677ce0596e91d-4296724-images-thumbs&n=13'},
+    {id:'cep', t:'Цепь бензопил', p:'', img:'https://avatars.mds.yandex.net/i?id=d1185be7f234d32b739e136129b85e579687845b-5235709-images-thumbs&n=13'}
+  ] },
   'perforatory': { t: 'Перфораторы', items: [
     {id:'p1', t:'Перфоратор Interskol', p:'500 ₽', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=f31677e1187a459a80136e49a6ddcff942386bbc-9042901-images-thumbs&n=13'},
     {id:'p2', t:'Перфоратор Вихрь ССД Макс', p:'1000 ₽', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=d501421d78f1252281e1d2d3002dde928e3c1282-5449619-images-thumbs&n=13'},
@@ -455,7 +468,15 @@ function renderCats() {
 
   if (!search) {
     let cats = Object.entries(DB);
-    cats.sort((a, b) => a[1].t.localeCompare(b[1].t));
+    
+    // Кастомная сортировка: Расходники первые, Баллоны последние
+    cats.sort((a, b) => {
+        if (a[0] === 'rashodniki') return -1;
+        if (b[0] === 'rashodniki') return 1;
+        if (a[0] === 'ballony') return 1;
+        if (b[0] === 'ballony') return -1;
+        return a[1].t.localeCompare(b[1].t);
+    });
 
     cats.forEach(([key, c], index) => {
       let delay = (index % 15) * 0.05; 
