@@ -387,7 +387,7 @@ const DB = {
     {id:'r10', t:'Дренажный насос Вихрь ДН-258/8', p:'', type:'Электрический', img:'https://www.niceprice62.ru/uploads/cache/data/products_ps/1080/nasos-drenajnyiy-vihr-dn-258-8-vp-68-2-13_1-750x750.jpg'}
   ] },
   'klepalniki': { t: 'Клепальники', items: [
-    {id:'r11', t:'Клепальник', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=5d6fb9aba729c5c8bd3b52c1e332508c663a8ab5-5451798-images-thumbs&n=13'}
+    {id:'r11', t:'Клепальник', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=d80a7b2aee66f23f1ed6bf3032b8314a_l-9265564-images-thumbs&n=13'}
   ] },
   'lebedki': { t: 'Лебедки', items: [
     {id:'r15', t:'Лебедка ЭЛ-125/250', p:'600 ₽', type:'Электрический', img:'https://cdn.vseinstrumenti.ru/images/goods/skladskoe-oborudovanie-i-tehnika-dlya-sklada/tali/837118/1200x800/144129158.jpg'},
@@ -432,7 +432,7 @@ const DB = {
   'trimmery': { t: 'Триммеры', items: [
     {id:'r32', t:'Триммер Парма', p:'1000 ₽', type:'Бензиновый', img:'https://avatars.mds.yandex.net/i?id=e2c1054de25e879981afe10e1a32a89345386494-4743742-images-thumbs&n=13'}
   ] },
-  'feny': { t: 'Фены технические', items: [
+  'feny': { t: 'Строительные фены', items: [
     {id:'r33', t:'Фен строительный', p:'600 ₽', type:'Электрический', img:'https://avatars.mds.yandex.net/i?id=6a715744934c93675e7563440062c7b0eae05bcf-12166422-images-thumbs&n=13'}
   ] },
   'osnastka': { t: 'Оснастка и насадки', items: [
@@ -477,10 +477,18 @@ function renderCats() {
     });
   } else {
     let prods = [];
+    
+    // Умный поиск (ищем по товару и категории, отсекаем окончания)
+    let searchBase = search;
+    if (search.length > 3 && (search.endsWith('а') || search.endsWith('я') || search.endsWith('ы') || search.endsWith('и'))) {
+        searchBase = search.slice(0, -1);
+    }
+
     for (let key in DB) {
       let cat = DB[key];
       cat.items.forEach(item => {
-        if (item.t.toLowerCase().includes(search)) {
+        let fullStr = (item.t + ' ' + cat.t).toLowerCase();
+        if (fullStr.includes(search) || (searchBase && fullStr.includes(searchBase))) {
           prods.push({ catKey: key, catTitle: cat.t, item: item });
         }
       });
