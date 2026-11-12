@@ -81,7 +81,7 @@ body {
 }
 
 .cat-image-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
-.cat-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
+.cat-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; filter: contrast(1.08) saturate(1.1); }
 .cat-card:hover .cat-image-box img { transform: scale(1.1); }
 .cat-image-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
 
@@ -91,7 +91,7 @@ body {
 .cat-card:hover .cat-count { background: var(--primary-light); color: var(--primary-hover); }
 
 .prod-img-box { width: 100%; height: 140px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); padding: 15px; }
-.prod-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; }
+.prod-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform 0.3s ease; filter: contrast(1.08) saturate(1.1); }
 .prod-card:hover .prod-img-box img { transform: scale(1.1); }
 .prod-img-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
 .prod-info { padding: 15px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
@@ -105,7 +105,7 @@ body {
 .prod-detail { display: flex; flex-direction: column; gap: 30px; background: #fff; padding: 30px; border-radius: 20px; border: 2px solid var(--border); margin-top: 20px; position: relative; overflow: hidden; }
 .prod-detail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), #fbbf24); }
 .detail-img-box { width: 100%; max-height: 350px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-.detail-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.detail-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; filter: contrast(1.08) saturate(1.1); }
 .detail-info h1 { font-size: 2rem; color: var(--text-dark); margin-bottom: 25px; }
 .features-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
 .feature-item { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; color: #475569; font-weight: 500; }
@@ -203,12 +203,12 @@ body {
 </header>
 
 <div class="container">
-  <!-- ЭКРАН 1: КАТЕГОРИИ -->
+  <!-- ЭКРАН 1: КАТЕГОРИИ И ПОИСК ПО ТОВАРАМ -->
   <div id="view-cats" class="page active">
-    <div class="title"><h1>Каталог инструмента</h1><p>Выберите нужную категорию</p></div>
+    <div class="title"><h1>Каталог инструмента</h1><p>Выберите категорию или воспользуйтесь поиском</p></div>
     
     <div class="controls">
-      <input type="text" id="search-cat" class="search-box" placeholder="🔍 Поиск категории..." oninput="renderCats()">
+      <input type="text" id="search-cat" class="search-box" placeholder="🔍 Поиск по категориям и товарам..." oninput="renderCats()">
     </div>
     <div class="grid" id="cats-grid"></div>
   </div>
@@ -367,7 +367,7 @@ const DB = {
     {id:'r5', t:'Генератор Fubag BS 5500', p:'1300 ₽', img:'https://avatars.mds.yandex.net/i?id=a44d5f912a6bb1dca61416a68d8e1d4ca26a1d8b-4904627-images-thumbs&n=13'}
   ] },
   'gaykovery': { t: 'Гайковерты', items: [
-    {id:'r6', t:'Гайковерт АКБ DeWALT', p:'700 ₽', img:'https://avatars.mds.yandex.net/i?id=35e8102933c7f6ea75969ada680fcafe8168c14e-5681290-images-thumbs&n=13'}
+    {id:'r6', t:'Гайковерт АКБ DeWALT', p:'700 ₽', img:'https://dewalt.store/media/catalog/product/cache/48/small_image/1248x/a4e40ebdc3e371adff845072e1c73f37/3/5/35051d57-df2a-11f0-b777-005056043025.jpg'}
   ] },
   'gorelki': { t: 'Газовые горелки', items: [
     {id:'r7', t:'Газовая горелка', p:'200 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnoe-oborudovanie-i-tehnika/krovelnye-gorelki/3677322/560x504/60149496.jpg'},
@@ -433,7 +433,7 @@ const DB = {
   ] },
   'ballony': { t: 'Баллоны', items: [
     {id:'r1', t:'Баллон Пропан', p:'500 ₽', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
-    {id:'r2', t:'Баллон Кислородный', p:'900 ₽', img:'https://ir.ozone.ru/s3/multimedia-1-t/7286572541.jpg'}
+    {id:'r2', t:'Баллон Кислородный', p:'900 ₽', img:'https://60.img.avito.st/image/1/1.NEiCk7a1mKH4Olap5vMVLukymqE8OFap-Dqaow.wQPfB2gZ-bvr40bpwIPyTW40PuG487uS4PC7AJow6tM'}
   ]},
   'boltoresy': { t: 'Болторезы', items: [
     {id:'r3', t:'Болторез ручной', p:'800 ₽', img:'https://avatars.mds.yandex.net/get-mpic/13750035/2a00000198c1aa14f9b5d090c3729ad306ee/orig'}
@@ -443,23 +443,38 @@ const DB = {
 let currentCat = '';
 
 function renderCats() {
-  const search = document.getElementById('search-cat').value.toLowerCase();
+  const search = document.getElementById('search-cat').value.toLowerCase().trim();
   
-  let items = Object.entries(DB).filter(([key, data]) => {
+  let html = '';
+
+  // 1. Поиск категорий
+  let cats = Object.entries(DB).filter(([key, data]) => {
     return data.t.toLowerCase().includes(search);
   });
+  cats.sort((a, b) => a[1].t.localeCompare(b[1].t));
 
-  items.sort((a, b) => a[1].t.localeCompare(b[1].t));
+  // 2. Поиск товаров (только если есть запрос)
+  let prods = [];
+  if (search) {
+    for (let key in DB) {
+      let cat = DB[key];
+      cat.items.forEach(item => {
+        if (item.t.toLowerCase().includes(search)) {
+          prods.push({ catKey: key, catTitle: cat.t, item: item });
+        }
+      });
+    }
+    // Сортируем товары по названию
+    prods.sort((a, b) => a.item.t.localeCompare(b.item.t));
+  }
 
-  let html = '';
-  items.forEach(([key, c], index) => {
+  // Рендер категорий
+  cats.forEach(([key, c], index) => {
     let delay = (index % 15) * 0.05; 
-    
     let coverImg = '';
     for (let item of c.items) {
       if (item.img) { coverImg = item.img; break; }
     }
-    
     let imgHtml = coverImg 
       ? `<div class="cat-image-box"><img src="${coverImg}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:1rem\\'>ФОТО</span>';"></div>`
       : `<div class="cat-image-box no-photo">ФОТО</div>`;
@@ -472,6 +487,26 @@ function renderCats() {
       </div>
     </a>`;
   });
+
+  // Рендер товаров (если есть поиск и найдены товары)
+  if (search && prods.length) {
+    prods.forEach((p, index) => {
+      let delay = ((cats.length + index) % 15) * 0.05;
+      let item = p.item;
+      let imgHtml = item.img 
+        ? `<div class="prod-img-box"><img src="${item.img}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:0.9rem\\'>ФОТО</span>';"></div>`
+        : `<div class="prod-img-box no-photo">ФОТО</div>`;
+      
+      html += `<a href="#prod-${item.id}" class="prod-card stagger-item" style="animation-delay:${delay}s">
+        ${imgHtml}
+        <div class="prod-info">
+          <div class="prod-title">${item.t}</div>
+          <div class="cat-count" style="margin-top:5px;font-size:0.75rem;">${p.catTitle}</div>
+        </div>
+      </a>`;
+    });
+  }
+
   document.getElementById('cats-grid').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:20px">Ничего не найдено</p>';
 }
 
