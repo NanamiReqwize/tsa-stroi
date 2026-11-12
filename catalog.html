@@ -253,7 +253,7 @@ const DB = {
     {id:'perchatki', t:'Перчатки строительные', img:'https://avatars.mds.yandex.net/i?id=b631ffc366228d4e05f7789b03e677ce0596e91d-4296724-images-thumbs&n=13'},
     {id:'meshok', t:'Мешок строительный', img:'https://avatars.mds.yandex.net/i?id=d9d2a9e601dd48f4a903cffc050a9615c19672d7-5086971-images-thumbs&n=13'},
     {id:'krug1', t:'Круг отрезной 125х1,2', img:'https://avatars.mds.yandex.net/i?id=440f01cda446cd381bfb118fd9aabf3e4439a5ef-5233330-images-thumbs&n=13'},
-    {id:'krug8', t:'Круг шлифовальный 215', img:'https://avatars.mds.yandex.net/i?id=2122476965ca83a1a9e8736c35cdc4ceffcbb742-5305607-images-thumbs&n=13'},
+    {id:'krug8', t:'Круг шлифовальный', img:'https://avatars.mds.yandex.net/i?id=2122476965ca83a1a9e8736c35cdc4ceffcbb742-5305607-images-thumbs&n=13'},
     {id:'krug9', t:'Круг полировальный', img:'https://avatars.mds.yandex.net/i?id=004fb95cfaf9cca05d4871e27d645775c719bed3-5317467-images-thumbs&n=13'},
     {id:'krug7', t:'Круг лепестковый', img:'https://avatars.mds.yandex.net/get-mpic/11935191/2a0000018e9e0e2bb63de0d12895311cae3e/orig'},
     {id:'krug2', t:'Круг отрезной 125х1,6', img:'https://avatars.mds.yandex.net/get-mpic/5255532/img_id1394540051430805836.jpeg/9hq'},
@@ -311,15 +311,6 @@ const DB = {
   ]},
   'vibroplity': { t: 'Виброплиты', items: [
     {id:'vp1', t:'Виброплита Gigant', type:'Бензиновый', img:'https://avatars.mds.yandex.net/i?id=07657d7f28f08cbf538140523a60e8bd3cbad347-12367219-images-thumbs&n=13'}
-  ]},
-  'bury': { t: 'Буры и коронки', items: [
-    {id:'bur2', t:'Бур 16, 20, 22, 24, 25 SSD', img:'https://avatars.mds.yandex.net/i?id=118811b9e10209cbaaa2ade00d0bd0ff780df4fd-16451760-images-thumbs&n=13'},
-    {id:'bur3', t:'Бур 18 SSD MAX', img:'https://avatars.mds.yandex.net/i?id=906a351a54d63fcc0dbd76c451b374538faeb684-5233025-images-thumbs&n=13'},
-    {id:'bur1', t:'Бур 30, 35 SSD', img:'https://avatars.mds.yandex.net/i?id=2525ecca819e81ae918eefad5c1903ed7f939c38-4080015-images-thumbs&n=13'},
-    {id:'bur4', t:'Бур 35, 40 SSD MAX', img:'https://avatars.mds.yandex.net/i?id=475f2136f837c1ff796db2d3ee8973b720af494c-9182048-images-thumbs&n=13'},
-    {id:'kor1', t:'Коронка по бетону 68мм', img:'https://avatars.mds.yandex.net/i?id=f5b313a33caac5b5ee0c091b0dae44bd4aee8cb8-4836671-images-thumbs&n=13'},
-    {id:'kor2', t:'Коронка по бетону 80мм', img:'https://avatars.mds.yandex.net/i?id=3054171de5669eff15a74982e5fb1bffad92f706-12525794-images-thumbs&n=13'},
-    {id:'kor3', t:'Коронка по бетону 110мм', img:'https://avatars.mds.yandex.net/i?id=127278f54490b369335af3d5a0923ecd6dd386d3-4872083-images-thumbs&n=13'}
   ]},
   'motobury': { t: 'Мотобуры', items: [
     {id:'r18', t:'Мотобур Huter 3,2лс 2400вт', type:'Бензиновый', img:'https://avatars.mds.yandex.net/i?id=6a7a2b1d7808d8d413e987a2f21d26f4b6162d8b-5239820-images-thumbs&n=13'}
@@ -395,6 +386,9 @@ const DB = {
     {id:'r16', t:'Лебедка Ручная', img:'https://avatars.mds.yandex.net/get-mpic/16437846/2a0000019a0226b7c6807a3a5720d28ffb74/orig'},
     {id:'r31', t:'Таль Рычажная 3т', img:'https://avatars.mds.yandex.net/i?id=4203066ec9f61969c6940aba0a1f51c5260d92bc-5873534-images-thumbs&n=13'}
   ]},
+  'metalloiskateli': { t: 'Металлоискатели', items: [
+    {id:'metal1', t:'Металлоискатель GARRETT ACE200i', type:'Электронный', img:'https://garrett-russia.ru/image/catalog/Blog/009/garrett-ace-200i-obzor-byudzhetnogo-metalloiskatelya-27.jpg'}
+  ] },
   'elektropribory': { t: 'Электроприборы', items: [
     {id:'tv1', t:'Тепловизор AMO T820', type:'Аккумуляторный', img:'https://avatars.mds.yandex.net/i?id=a7c93e9c08cddc185d9403507fb2869b4a3503ba-4250988-images-thumbs&n=13'},
     {id:'r8', t:'Детектор проводки', type:'Аккумуляторный', img:'https://avatars.mds.yandex.net/i?id=6dee071727f7f963c4d9e6fcc21cb36d38736093-5635981-images-thumbs&n=13'},
@@ -445,7 +439,16 @@ const DB = {
   'ballony': { t: 'Баллоны', items: [
     {id:'r1', t:'Баллон Пропан', img:'https://avatars.mds.yandex.net/get-mpic/11483501/2a0000018c50466a824922314a7efe3f9414/orig'},
     {id:'r2', t:'Баллон Кислородный', img:'https://60.img.avito.st/image/1/1.NEiCk7a1mKH4Olap5vMVLukymqE8OFap-Dqaow.wQPfB2gZ-bvr40bpwIPyTW40PuG487uS4PC7AJow6tM'}
-  ]}
+  ]},
+  'bury': { t: 'Буры и коронки', items: [
+    {id:'bur2', t:'Бур 16, 20, 22, 24, 25 SSD', img:'https://avatars.mds.yandex.net/i?id=118811b9e10209cbaaa2ade00d0bd0ff780df4fd-16451760-images-thumbs&n=13'},
+    {id:'bur3', t:'Бур 18 SSD MAX', img:'https://avatars.mds.yandex.net/i?id=906a351a54d63fcc0dbd76c451b374538faeb684-5233025-images-thumbs&n=13'},
+    {id:'bur1', t:'Бур 30, 35 SSD', img:'https://avatars.mds.yandex.net/i?id=2525ecca819e81ae918eefad5c1903ed7f939c38-4080015-images-thumbs&n=13'},
+    {id:'bur4', t:'Бур 35, 40 SSD MAX', img:'https://avatars.mds.yandex.net/i?id=475f2136f837c1ff796db2d3ee8973b720af494c-9182048-images-thumbs&n=13'},
+    {id:'kor1', t:'Коронка по бетону 68мм', img:'https://avatars.mds.yandex.net/i?id=f5b313a33caac5b5ee0c091b0dae44bd4aee8cb8-4836671-images-thumbs&n=13'},
+    {id:'kor2', t:'Коронка по бетону 80мм', img:'https://avatars.mds.yandex.net/i?id=3054171de5669eff15a74982e5fb1bffad92f706-12525794-images-thumbs&n=13'},
+    {id:'kor3', t:'Коронка по бетону 110мм', img:'https://avatars.mds.yandex.net/i?id=127278f54490b369335af3d5a0923ecd6dd386d3-4872083-images-thumbs&n=13'}
+  ] }
 };
 
 let currentCat = '';
@@ -458,16 +461,21 @@ function renderCats() {
     let cats = Object.entries(DB);
     
     cats.sort((a, b) => {
-        if (a[0] === 'rashodniki') return -1;
-        if (b[0] === 'rashodniki') return 1;
+        // Кастомный порядок для конкретных категорий
+        const customOrder = {
+            'rashodniki': 1,
+            'boltoresy': 100,
+            'ballony': 101,
+            'bury': 102
+        };
         
-        let titleA = a[1].t;
-        let titleB = b[1].t;
+        let orderA = customOrder[a[0]] || 0;
+        let orderB = customOrder[b[0]] || 0;
         
-        if (a[0] === 'ballony') titleA = 'Болторезы_1';
-        if (b[0] === 'ballony') titleB = 'Болторезы_1';
+        if (orderA !== orderB) return orderA - orderB;
         
-        return titleA.localeCompare(titleB);
+        // Остальные по алфавиту
+        return a[1].t.localeCompare(b[1].t);
     });
 
     cats.forEach(([key, c], index) => {
