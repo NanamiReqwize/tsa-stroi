@@ -95,9 +95,7 @@ body {
 .prod-card:hover .prod-img-box img { transform: scale(1.1); }
 .prod-img-box.no-photo { background: #f1f5f9; color: #94a3b8; font-weight: bold; font-size: 0.9rem; }
 .prod-info { padding: 15px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
-.prod-title { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; flex-grow: 1; }
-.prod-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 10px; border-radius: 8px; margin-top: auto; transition: all 0.3s; }
-.prod-card:hover .prod-price { background: var(--primary); color: #fff; }
+.prod-title { font-size: 1rem; font-weight: 700; color: var(--text-dark); flex-grow: 1; }
 
 .back-header { display: flex; align-items: center; gap: 15px; margin: 30px 0 20px; }
 .back-btn { font-size: 1.1rem; color: var(--text-dark); text-decoration: none; font-weight: bold; padding: 10px 20px; background: #fff; border-radius: 10px; border: 2px solid var(--border); transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
@@ -108,13 +106,58 @@ body {
 .prod-detail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), #fbbf24); }
 .detail-img-box { width: 100%; max-height: 350px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
 .detail-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-.detail-info h1 { font-size: 2rem; color: var(--text-dark); margin-bottom: 15px; }
-.detail-price { font-size: 3rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; }
-.features-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; }
+.detail-info h1 { font-size: 2rem; color: var(--text-dark); margin-bottom: 25px; }
+.features-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
 .feature-item { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; color: #475569; font-weight: 500; }
 .feature-icon { width: 24px; height: 24px; color: #10b981; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #ecfdf5; border-radius: 50%; }
-.call-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s; border: none; cursor: pointer; width: 100%; animation: pulseBtn 2s infinite; }
-.call-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(249,115,22,0.4); animation: none; }
+
+/* ===== КНОПКА ВЫЗОВА ===== */
+.call-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff;
+    text-decoration: none;
+    padding: 13px 26px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(249,115,22,0.35);
+    animation: callPulse 2.2s ease-in-out infinite;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.call-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.call-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -120%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform: skewX(-20deg);
+    animation: callShimmer 3s ease-in-out infinite;
+}
+.call-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 28px rgba(249,115,22,0.6);
+    animation: none;
+}
+.call-btn:active { transform: translateY(-1px) scale(0.99); }
+
+@keyframes callPulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(249,115,22,0.35); }
+    50%      { box-shadow: 0 4px 25px rgba(249,115,22,0.65); }
+}
+@keyframes callShimmer {
+    0%   { left: -120%; }
+    60%,100% { left: 120%; }
+}
 
 .footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px 0; font-size: .9rem; margin-top: 50px; border-top: 3px solid var(--primary); }
 .mobile-call { display: flex; position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 700; z-index: 100; justify-content: center; transition: 0.2s; gap: 10px; align-items: center; }
@@ -197,7 +240,6 @@ body {
       <div class="detail-img-box" id="p-img"></div>
       <div class="detail-info">
         <h1 id="p-title"></h1>
-        <div class="detail-price" id="p-price"></div>
         <div class="features-list">
           <div class="feature-item"><div class="feature-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>Отличное состояние</div>
           <div class="feature-item"><div class="feature-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>Проверка при выдаче</div>
@@ -217,43 +259,92 @@ body {
 <script>
 const DB = {
   'udliniteli': { t: 'Удлинители', items: [
-    {id:'ud1', t:'Удлинитель 30м', p:'150 ₽', img:'https://avatars.mds.yandex.net/get-mpic/4828674/img_id335441104514677705.jpeg/orig'},
-    {id:'ud2', t:'Удлинитель Шнек 400мм', p:'100 ₽', img:''}
+    {id:'ud1', t:'Удлинитель 30м', p:'150 ₽', img:'https://avatars.mds.yandex.net/i?id=c6e7172b7fd9222ccbfb2ac38de4c7c1958c8428-5884527-images-thumbs&n=13'}
   ]},
-  'perforatory': { t: 'Перфораторы и отбойные молотки', items: [
-    {id:'p1', t:'Перфоратор Interskol', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/12414275/1000x1000/156665609.jpg'},
-    {id:'p2', t:'Перфоратор Вихрь SSD MAX', p:'1000 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/otbojnye-molotki/7335919/2400x1600/90057374.jpg'}
+  'perforatory': { t: 'Перфораторы', items: [
+    {id:'p1', t:'Перфоратор Interskol', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=f31677e1187a459a80136e49a6ddcff942386bbc-9042901-images-thumbs&n=13'},
+    {id:'p2', t:'Перфоратор Вихрь ССД Макс', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=d501421d78f1252281e1d2d3002dde928e3c1282-5449619-images-thumbs&n=13'},
+    {id:'p3', t:'Перфоратор Перфоманс', p:'', img:'https://avatars.mds.yandex.net/i?id=25da3ecafab8d4aa0d854d5f3916d74a3e239e4f-4330166-images-thumbs&n=13'}
+  ]},
+  'otboynye-molotki': { t: 'Отбойные молотки', items: [
+    {id:'om1', t:'Отбойный молоток Messer', p:'', img:'https://avatars.mds.yandex.net/i?id=de0dd2bdf19719dec625dcccc27a8a593edb234c-5231794-images-thumbs&n=13'},
+    {id:'om2', t:'Отбойный молоток Sturm', p:'', img:'https://avatars.mds.yandex.net/i?id=713a80c89cfbdaaf2ff70396ace8a496a63cc794-5878053-images-thumbs&n=13'}
   ]},
   'ushm': { t: 'УШМ (Болгарки)', items: [
     {id:'u1', t:'УШМ 125', p:'500 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16437846/2a0000019d8c71086f0852c8ee4eb1b81cc5/orig'},
-    {id:'u2', t:'УШМ 150', p:'600 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/461/356/210/221/048/100065700838b0.png'}
+    {id:'u2', t:'УШМ 150', p:'600 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/461/356/210/221/048/100065700838b0.png'},
+    {id:'u3', t:'УШМ АКБ Onevan 125', p:'', img:'https://avatars.mds.yandex.net/i?id=95c0e9943cbb38357da6450aa97b63d58eb3fd8e-9181226-images-thumbs&n=13'},
+    {id:'u4', t:'УШМ АКБ Handskonner', p:'', img:'https://avatars.mds.yandex.net/i?id=b0e8bf10942e5994359f6f3959485683cf5df79a-15400075-images-thumbs&n=13'},
+    {id:'u5', t:'УШМ 230', p:'', img:'https://avatars.mds.yandex.net/i?id=4ecf42ae559e7ef499e82fab22b272a59eee3aa2-16886177-images-thumbs&n=13'}
   ]},
-  'shneki': { t: 'Шнеки и Буры', items: [
-    {id:'sh1', t:'Шнек 100х800', p:'450 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063280/2400x1600/132198554.jpg'},
-    {id:'sh2', t:'Шнек 150х800', p:'500 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/rashodnye-materialy-i-osnastka/rashodnye-materialy-dlya-sadovoj-tehniki/1063299/2400x1600/126369194.jpg'}
+  'shneki': { t: 'Шнеки', items: [
+    {id:'sh1', t:'Шнек 100х800', p:'', img:'https://avatars.mds.yandex.net/i?id=1caaf9fb7a32908606bd1706b3d49a1098508166-5242177-images-thumbs&n=13'},
+    {id:'sh2', t:'Шнек 150х800', p:'', img:'https://avatars.mds.yandex.net/i?id=d929dfec190a26c3e192813e093d1865f3215a57-3584117-images-thumbs&n=13'},
+    {id:'sh3', t:'Шнек 200', p:'', img:'https://avatars.mds.yandex.net/i?id=398680ab7ad8b2d9f22b93e5672c4aad178fcae3-10875714-images-thumbs&n=13'},
+    {id:'sh4', t:'Шнек 300х1000', p:'', img:'https://avatars.mds.yandex.net/i?id=0a92204c4e13a322b3f34db60c4409e5d99957cb-10505679-images-thumbs&n=13'},
+    {id:'ush1', t:'Удлинитель Шнек 400мм', p:'', img:'https://avatars.mds.yandex.net/i?id=30435e125bf0bb0322bf3415de3b9178e153c515-9211281-images-thumbs&n=13'},
+    {id:'ush2', t:'Удлинитель Шнек 1000мм', p:'', img:'https://avatars.mds.yandex.net/i?id=c4c3eb6ca09954404c6a50294da611a0c69d9128-3443916-images-thumbs&n=13'}
   ]},
-  'svarka': { t: 'Сварка', items: [
+  'svarka': { t: 'Сварочные аппараты', items: [
     {id:'s1', t:'Сварочный п/а Zitrek 180', p:'1000 ₽', img:'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-74/744/066/411/181/639/600013219354b6.jpg'},
-    {id:'s2', t:'Сварочный аппарат Ресанта ПРО 250', p:'900 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/svarochnoe-oborudovanie/136180/1000x1000/201073353.jpg'}
+    {id:'s2', t:'Сварочный аппарат Ресанта ПРО 250', p:'900 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/svarochnoe-oborudovanie/136180/1000x1000/201073353.jpg'},
+    {id:'s3', t:'Сварочная маска', p:'', img:'https://avatars.mds.yandex.net/i?id=fec2de04898db6a5c15f8baa4057531acdb886f3-9029997-images-thumbs&n=13'},
+    {id:'s4', t:'Сварочный аппарат Real 220', p:'', img:'https://avatars.mds.yandex.net/i?id=fa55be3c2b8a55b5bf3201e84394dbe61535446b-12569757-images-thumbs&n=13'},
+    {id:'s5', t:'Сварка ПВХ', p:'', img:'https://avatars.mds.yandex.net/i?id=e042c95b1ac3db12f8db573fdc0a420bc4633896-5224693-images-thumbs&n=13'}
   ]},
-  'benzopily': { t: 'Бензопилы и Бензорезы', items: [
-    {id:'bp1', t:'Бензопила hanskonner', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/5365919/img_id1884980393196573580.jpeg/orig'},
+  'benzorezy': { t: 'Бензорезы', items: [
     {id:'bp2', t:'Бензорез', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/1603927/img_id6958938792989727374.jpeg/orig'}
   ]},
   'betonomeshalki': { t: 'Бетономешалки', items: [
     {id:'b1', t:'Бетономешалка 180', p:'900 ₽', img:'https://cdn.etm.ru/ipro/2149/21183041.jpg'}
   ]},
+  'vibratory': { t: 'Вибраторы', items: [
+    {id:'v1', t:'Вибратор Gigant 1.4м', p:'', img:'https://cdn.kuvalda.ru/data/file_resize/product/c7/ae/74/landing-c7ae744ab1a316bfac1b7a4719d24adb.jpg'},
+    {id:'v2', t:'Вибратор DDE 2м', p:'', img:'https://a.allegroimg.com/original/110037/0eb157b2486b961b53515196718d/WIBRATOR-DO-BETONU-ZAGESZCZARKA-18000-min-BULAWA-2m-Waz-200cm-Kod-producenta-KD10842'}
+  ]},
+  'vibroplity': { t: 'Виброплиты', items: [
+    {id:'vp1', t:'Виброплита Gigant', p:'', img:'https://avatars.mds.yandex.net/i?id=07657d7f28f08cbf538140523a60e8bd3cbad347-12367219-images-thumbs&n=13'}
+  ]},
+  'bury': { t: 'Буры', items: [
+    {id:'bur1', t:'Бур 30, 35 SSD', p:'', img:'https://avatars.mds.yandex.net/i?id=2525ecca819e81ae918eefad5c1903ed7f939c38-4080015-images-thumbs&n=13'},
+    {id:'bur2', t:'Бур 16, 20, 22, 24, 25 SSD', p:'', img:'https://avatars.mds.yandex.net/i?id=118811b9e10209cbaaa2ade00d0bd0ff780df4fd-16451760-images-thumbs&n=13'},
+    {id:'bur3', t:'Бур 18 SSD MAX', p:'', img:'https://avatars.mds.yandex.net/i?id=906a351a54d63fcc0dbd76c451b374538faeb684-5233025-images-thumbs&n=13'},
+    {id:'bur4', t:'Бур 35, 40 SSD MAX', p:'', img:'https://avatars.mds.yandex.net/i?id=475f2136f837c1ff796db2d3ee8973b720af494c-9182048-images-thumbs&n=13'}
+  ]},
+  'motobury': { t: 'Мотобуры', items: [
+    {id:'r18', t:'Мотобур Huter 3,2лс 2400вт', p:'', img:'https://avatars.mds.yandex.net/i?id=e5062d6fe42a3836ba9b0fef890a73c644a12be8-5363089-images-thumbs&n=13'}
+  ]},
   'dreli': { t: 'Дрели и Шуруповерты', items: [
     {id:'d1', t:'Дрель ГРАД М', p:'500 ₽', img:'https://instrumentmarket.ru/upload/iblock/a16/2wc37flavb83k1hwzt7lp63wved69h4g/drel_s_udarom_grad_m_du_850_850vt_zvp_13mm_2_800ob_m_.jpg'},
     {id:'d2', t:'Шуруповерт Makita Мал.', p:'500 ₽', img:'https://img.positronica.ru/items/2010807_v01_b.webp'}
   ]},
-  'pily': { t: 'Пилы и Лобзики', items: [
+  'pily': { t: 'Пилы', items: [
     {id:'pi1', t:'Циркулярная пила', p:'600 ₽', img:'https://cdn.kuvalda.ru/data/file_resize/product/8a/7c/b6/landing-pila-cirkuljarnaja-setevaja-bosch-gks-190-1.jpg'},
-    {id:'pi2', t:'Пила Эл.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/12621455/2a000001903ac959867dfcbc90cc82b495ae/orig'}
+    {id:'pi2', t:'Пила Эл.', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/12621455/2a000001903ac959867dfcbc90cc82b495ae/orig'},
+    {id:'bp1', t:'Бензопила hanskonner', p:'1000 ₽', img:'https://avatars.mds.yandex.net/get-mpic/5365919/img_id1884980393196573580.jpeg/orig'},
+    {id:'pi3', t:'Мини пила', p:'', img:'https://avatars.mds.yandex.net/i?id=6704b389961b7350429cb20e3d9846c55a382f0b-5282335-images-thumbs&n=13'},
+    {id:'pi4', t:'Сабельная пила', p:'', img:'https://avatars.mds.yandex.net/i?id=0007c0fc1dfa5889630962678c58c4a3ae34c6e2-5709310-images-thumbs&n=13'},
+    {id:'pi5', t:'Торцовочная пила DCA', p:'', img:'https://avatars.mds.yandex.net/i?id=7a5d4690e565903b270407cf0ebac567354442ad-12395903-images-thumbs&n=13'}
   ]},
-  'shlifmashiny': { t: 'Шлифмашинки и Фрезеры', items: [
+  'lobziki': { t: 'Лобзики', items: [
+    {id:'lob1', t:'Лобзик', p:'', img:'https://avatars.mds.yandex.net/i?id=be080093c2492f715ee56514045ea38ee143547b-4349754-images-thumbs&n=13'}
+  ] },
+  'rubanki': { t: 'Рубанки', items: [
+    {id:'rb1', t:'Рубанок Зубр 950 Вт 82 мм', p:'', img:'https://avatars.mds.yandex.net/i?id=6cb642381e7af3e097569c9a65a703e9968f7ec4-4592245-images-thumbs&n=13'}
+  ]},
+  'frezernaya-mashina': { t: 'Фрезерная машина', items: [
+    {id:'fm1', t:'Фрезерная машина ВИХРЬ ФМ-1900', p:'', img:'https://avatars.mds.yandex.net/i?id=7765e97b082eae556ed8e637b723191ab250166e-5237668-images-thumbs&n=13'}
+  ]},
+  'teplovizory': { t: 'Тепловизоры', items: [
+    {id:'tv1', t:'Тепловизор AMO T820', p:'', img:'https://avatars.mds.yandex.net/i?id=a7c93e9c08cddc185d9403507fb2869b4a3503ba-4250988-images-thumbs&n=13'}
+  ]},
+  'shlifmashiny': { t: 'Шлифмашинки', items: [
     {id:'shl1', t:'Шлейфмаш. Эксцентр. Faevorite', p:'600 ₽', img:'https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/shlifovalnye-mashinki-shlifmashinki/19628370/2400x1600/206625482.jpg'},
-    {id:'shl2', t:'Шлейфмаш. Эксцентр. DEKO', p:'600 ₽', img:'https://cdn.poryadok.ru/upload/iblock/681/6816c1d08d33d62a334c4f78c31b0a51.jpg'}
+    {id:'shl2', t:'Шлейфмаш. Эксцентр. DEKO', p:'600 ₽', img:'https://cdn.poryadok.ru/upload/iblock/681/6816c1d08d33d62a334c4f78c31b0a51.jpg'},
+    {id:'shl3', t:'Шлифмашина жираф Bosch', p:'', img:'https://avatars.mds.yandex.net/i?id=c16d7df278bcb07bb909fcd16305a32912db3a24-12982376-images-thumbs&n=13'}
+  ]},
+  'shvonarezchik': { t: 'Швонарезчик', items: [
+    {id:'shv1', t:'Шоврезчик Husqvarna', p:'', img:'https://avatars.mds.yandex.net/i?id=259e1a65fb345225cf814194fb0a15b03bd8a219-8449089-images-thumbs&n=13'}
   ]},
   'kompressory': { t: 'Компрессоры', items: [
     {id:'k1', t:'Компрессор 50л 86ар. 500л/мин', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e547a39444b3af3823b1975afcf385e8f92a51c0-9871231-images-thumbs&n=13'},
@@ -266,9 +357,6 @@ const DB = {
   'lestnicy': { t: 'Лестницы и Стремянки', items: [
     {id:'l1', t:'Стремянка 6 ст.', p:'300 ₽', img:'https://avatars.mds.yandex.net/i?id=cd59cfbb20b2f1df88971c507317c0e08e0e9994-10500862-images-thumbs&n=13'},
     {id:'l2', t:'Стремянка 7 ст.', p:'400 ₽', img:'https://avatars.mds.yandex.net/i?id=fcc0ebf9196c09ef5541579342fe68afd366d630-5231899-images-thumbs&n=13'}
-  ]},
-  'motobury': { t: 'Мотобуры (Бензобуры)', items: [
-    {id:'r18', t:'Мотобур Huter 3,2лс 2400вт', p:'900 ₽', img:'https://cdn.pandashop.md/i/?i=/i/products/260/2604563.jpg&w=200&h=200'}
   ]},
   'vozduhoduvki': { t: 'Воздуходувки', items: [
     {id:'r4', t:'Воздуходувка', p:'1200 ₽', img:'https://avatars.mds.yandex.net/i?id=bc818dc7ccc8b41de38e926f49e8e780_l-4034519-images-thumbs&n=13'}
@@ -289,7 +377,7 @@ const DB = {
     {id:'r9', t:'Домкрат 1/10т', p:'400 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16413949/2a0000019bfd9e0aafed7b8f58bff422c63a/orig'}
   ] },
   'nasosy': { t: 'Насосы', items: [
-    {id:'r10', t:'Дренальный насос 900', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=669246afdc496429e137379e279a9dd29d0307ea-4809955-images-thumbs&n=13'}
+    {id:'r10', t:'Дренажный насос Вихрь ДН-258/8', p:'', img:'https://www.niceprice62.ru/uploads/cache/data/products_ps/1080/nasos-drenajnyiy-vihr-dn-258-8-vp-68-2-13_1-750x750.jpg'}
   ] },
   'klepalniki': { t: 'Клепальники', items: [
     {id:'r11', t:'Клепальник', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=5d6fb9aba729c5c8bd3b52c1e332508c663a8ab5-5451798-images-thumbs&n=13'}
@@ -299,7 +387,7 @@ const DB = {
     {id:'r16', t:'Лебедка Ручная', p:'300 ₽', img:'https://avatars.mds.yandex.net/get-mpic/16437846/2a0000019a0226b7c6807a3a5720d28ffb74/orig'},
     {id:'r35', t:'Лебедка 3 тонны', p:'1000 ₽', img:'https://centr-snab.ru/upload/iblock/492/fk3pfpe1uzgnnqsg2huqhkcc9t356hgz.png'}
   ]},
-  'izmeritelnye': { t: 'Измерительные приборы', items: [
+  'lazernye-urovni': { t: 'Лазерные уровни', items: [
     {id:'r17', t:'Лазерный уровень Makita', p:'500 ₽', img:'https://avatars.mds.yandex.net/i?id=5ae092d76c0b222af2640667f1249e0a0106fcf3-4615485-images-thumbs&n=13'}
   ]},
   'moyki': { t: 'Мойки высокого давления', items: [
@@ -318,7 +406,8 @@ const DB = {
     {id:'r24', t:'Прожектор', p:'50 ₽', img:'https://avatars.mds.yandex.net/i?id=565e00a5df31d2ffef538378034c63d77900aafd-5603715-images-thumbs&n=13'}
   ] },
   'rezaki': { t: 'Резаки', items: [
-    {id:'r25', t:'Резак+Баллоны', p:'2500 ₽', img:'https://avatars.mds.yandex.net/i?id=300c2445beb94f983382e9443f763b250ac708e9-12585911-images-thumbs&n=13'}
+    {id:'r25', t:'Резак+Баллоны', p:'2500 ₽', img:'https://avatars.mds.yandex.net/i?id=300c2445beb94f983382e9443f763b250ac708e9-12585911-images-thumbs&n=13'},
+    {id:'rz1', t:'Резак', p:'', img:'https://avatars.mds.yandex.net/i?id=1abb78cc08597d5567f7901b2d6ae9c036c4be5e-11492537-images-thumbs&n=13'}
   ]},
   'renovatory': { t: 'Реноваторы', items: [
     {id:'r27', t:'Реноватор DEKO 600ВТ', p:'600 ₽', img:'https://avatars.mds.yandex.net/get-mpic/6453326/img_id5624039835767580682.jpeg/orig'}
@@ -326,11 +415,11 @@ const DB = {
   'steplery': { t: 'Степлеры', items: [
     {id:'r28', t:'Степлер строительный', p:'150 ₽', img:'https://avatars.mds.yandex.net/i?id=8c72ffc7c14884d110d59ad6136cee69c434a8d9-5221376-images-thumbs&n=13'}
   ] },
+  'tali': { t: 'Таль', items: [
+    {id:'r31', t:'Таль Рычажная 3т', p:'', img:'https://avatars.mds.yandex.net/i?id=4203066ec9f61969c6940aba0a1f51c5260d92bc-5873534-images-thumbs&n=13'}
+  ] },
   'teplopushki': { t: 'Тепловые пушки', items: [
     {id:'r30', t:'Теплопушка Ballu 17К', p:'600 ₽', img:'https://avatars.mds.yandex.net/i?id=65370cb47b60783c30334a80dba80ac65d799b74-11867893-images-thumbs&n=13'}
-  ] },
-  'tali': { t: 'Тали', items: [
-    {id:'r31', t:'Таль Рычажная 3т', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=4203066ec9f61969c6940aba0a1f51c5260d92bc-5873534-images-thumbs&n=13'}
   ] },
   'trimmery': { t: 'Триммеры', items: [
     {id:'r32', t:'Триммер Парма', p:'1000 ₽', img:'https://avatars.mds.yandex.net/i?id=e2c1054de25e879981afe10e1a32a89345386494-4743742-images-thumbs&n=13'}
@@ -359,7 +448,6 @@ function renderCats() {
     return data.t.toLowerCase().includes(search);
   });
 
-  // Сортируем по алфавиту
   items.sort((a, b) => a[1].t.localeCompare(b[1].t));
 
   let html = '';
@@ -391,7 +479,6 @@ function renderItems(catKey) {
   const cat = DB[catKey];
   let items = cat.items.filter(item => item.t.toLowerCase().includes(search));
 
-  // Сортируем по алфавиту
   items.sort((a, b) => a.t.localeCompare(b.t));
 
   let html = '';
@@ -406,7 +493,6 @@ function renderItems(catKey) {
       ${imgHtml}
       <div class="prod-info">
         <div class="prod-title">${item.t}</div>
-        <div class="prod-price">${item.p} / сутки</div>
       </div>
     </a>`;
   });
@@ -432,7 +518,6 @@ function router() {
     if (item) {
       document.getElementById('back-to-cat-btn').href = `#${currentCat}`;
       document.getElementById('p-title').innerText = item.t;
-      document.getElementById('p-price').innerText = item.p + ' / сутки';
       
       if (item.img) {
         document.getElementById('p-img').innerHTML = `<img src="${item.img}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-weight:bold;font-size:1.5rem\\'>ФОТО</span>'">`;
@@ -450,7 +535,6 @@ function router() {
   }
 }
 
-// Первичная инициализация при загрузке
 renderCats();
 window.addEventListener('hashchange', router);
 window.addEventListener('load', () => { if (window.location.hash) router(); });
